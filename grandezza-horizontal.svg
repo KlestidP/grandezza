@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" width="640" height="160">
+  <title>Grandezza Design – horizontal lockup</title>
+  <g transform="translate(80,80)" fill="none" stroke="#B08D57">
+    <circle r="55" stroke-width="1.5"/>
+    <circle r="50" stroke-width="0.75"/>
+    <path d="M 19.8,-19.8 A 28,28 0 1 0 28,0 L 9,0" stroke-width="2.8" stroke-linecap="butt"/>
+  </g>
+  <line x1="158" y1="35" x2="158" y2="125" stroke="#B08D57" stroke-width="1"/>
+  <text x="180" y="84" font-family="Didot, 'Bodoni 72', 'Playfair Display', 'Times New Roman', serif" font-size="44" letter-spacing="9" fill="#1C1917">GRANDEZZA</text>
+  <text x="182" y="118" font-family="Didot, 'Bodoni 72', 'Playfair Display', 'Times New Roman', serif" font-size="14" letter-spacing="11" fill="#B08D57">DESIGN</text>
+</svg>

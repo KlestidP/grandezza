@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" width="140" height="140">
+  <title>Grandezza Design – monogram</title>
+  <g transform="translate(70,70)" fill="none" stroke="#B08D57">
+    <circle r="58" stroke-width="1.5"/>
+    <circle r="53" stroke-width="0.75"/>
+    <path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3" stroke-linecap="butt"/>
+  </g>
+</svg>

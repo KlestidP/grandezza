@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grandezza Design — Web- & Marketingdesign aus Bremen</title>
+<meta name="description" content="Grandezza Design ist ein Studio für Webdesign, Branding und Marketing in Bremen. Auftritte mit Haltung – Design mit Grandezza.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --charcoal:#1C1917;
+  --charcoal-2:#232019;
+  --ivory:#F6F1E8;
+  --gold:#B08D57;
+  --gold-light:#D4B678;
+  --serif:'Playfair Display', Didot, serif;
+  --sans:'Jost', 'Helvetica Neue', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--charcoal);color:var(--ivory);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden}
+body.gated{overflow:hidden;height:100vh}
+::selection{background:var(--gold);color:var(--charcoal)}
+
+#gate{position:fixed;inset:0;z-index:200;background:var(--charcoal);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6vh 6vw;transition:opacity .9s cubic-bezier(.4,0,.2,1),visibility .9s}
+#gate.closed{opacity:0;visibility:hidden;pointer-events:none}
+.gate-mark{width:110px;height:110px}
+.gate-mark circle,.gate-mark path{stroke-dasharray:400;stroke-dashoffset:400;animation:draw 2s cubic-bezier(.4,0,.2,1) forwards}
+.gate-mark circle:nth-child(2){animation-delay:.3s}
+.gate-mark path{animation-delay:.6s}
+@keyframes draw{to{stroke-dashoffset:0}}
+#gate h2{font-family:var(--serif);font-weight:400;font-size:clamp(38px,6.5vw,70px);letter-spacing:.16em;margin-top:34px;color:var(--ivory);opacity:0;animation:rise 1.1s .7s cubic-bezier(.2,.7,.2,1) forwards}
+.gate-sub{display:flex;align-items:center;gap:20px;margin-top:18px;opacity:0;animation:rise 1.1s 1s cubic-bezier(.2,.7,.2,1) forwards}
+.gate-sub .rule{width:48px;height:1px;background:var(--gold)}
+.gate-sub span{font-size:13px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold-light)}
+.choose{margin-top:8vh;opacity:0;animation:rise 1.1s 1.4s cubic-bezier(.2,.7,.2,1) forwards}
+.choose p{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(246,241,232,.55)}
+.langs{display:flex;align-items:center;justify-content:center;gap:clamp(24px,6vw,60px);margin-top:30px}
+.langs .divider{width:1px;height:68px;background:rgba(176,141,87,.45)}
+button.lang{display:flex;flex-direction:column;gap:9px;background:none;border:none;cursor:pointer;color:var(--ivory);padding:10px 24px;font-family:var(--sans)}
+button.lang .word{font-family:var(--serif);font-size:clamp(26px,4.2vw,42px);letter-spacing:.08em;transition:color .35s}
+button.lang .hint{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:rgba(246,241,232,.5);transition:color .35s}
+button.lang .underline{height:1px;width:0;background:var(--gold);margin:2px auto 0;transition:width .45s cubic-bezier(.2,.7,.2,1)}
+button.lang:hover .word,button.lang:focus .word{color:var(--gold-light)}
+button.lang:hover .hint,button.lang:focus .hint{color:var(--gold-light)}
+button.lang:hover .underline,button.lang:focus .underline{width:100%}
+.gate-foot{margin-top:auto;padding-top:6vh;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(246,241,232,.4);opacity:0;animation:rise 1.1s 1.8s forwards}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:22px 5vw;transition:background .4s,padding .4s}
+nav.scrolled{background:rgba(28,25,23,.92);backdrop-filter:blur(12px);padding:14px 5vw}
+.nav-brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ivory)}
+.nav-brand svg{width:38px;height:38px}
+.nav-brand span{font-family:var(--serif);font-size:18px;letter-spacing:5px}
+.nav-links{display:flex;align-items:center;gap:40px}
+.nav-links a{color:var(--ivory);text-decoration:none;font-size:13px;letter-spacing:3px;text-transform:uppercase;opacity:.75;transition:opacity .3s,color .3s}
+.nav-links a:hover{opacity:1;color:var(--gold-light)}
+#langToggle{background:none;border:1px solid rgba(176,141,87,.5);color:var(--gold-light);font-family:var(--sans);font-size:12px;letter-spacing:3px;padding:6px 14px;cursor:pointer;transition:background .3s,color .3s}
+#langToggle:hover{background:var(--gold);color:var(--charcoal)}
+
+.hero{position:sticky;top:0;min-height:100vh;overflow:hidden;background:#141110}
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--gold);z-index:150;transition:width .1s linear}
+.statement,.services,.work,.contact,footer{position:relative;z-index:2}
+.services,.work,footer{background:var(--charcoal)}
+#particles{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-caption{position:absolute;left:0;right:0;top:71%;text-align:center;pointer-events:none;opacity:0}
+body.entered .hero-caption{animation:rise 1.6s 1.1s cubic-bezier(.2,.7,.2,1) forwards}
+.hero-caption h1{font-family:var(--serif);font-weight:400;font-size:clamp(24px,3vw,36px);letter-spacing:.5em;color:var(--ivory);text-indent:.5em}
+.hero-caption p{margin-top:12px;font-size:14px;letter-spacing:.28em;text-transform:uppercase;color:rgba(212,182,120,.85)}
+.hero-foot{position:absolute;left:5vw;right:5vw;bottom:4.5vh;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none;opacity:0}
+body.entered .hero-foot{animation:rise 1.4s 1.6s cubic-bezier(.2,.7,.2,1) forwards}
+.hero-foot .coords{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(246,241,232,.4)}
+.hero-foot .cue{width:1px;height:52px;background:linear-gradient(var(--gold),transparent)}
+@keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+
+.statement{background:var(--ivory);color:var(--charcoal);padding:19vh 5vw;text-align:center}
+.statement h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.6vw,58px);line-height:1.35;max-width:900px;margin:0 auto}
+.statement h2 em{font-style:italic;color:var(--gold)}
+.statement p{margin:36px auto 0;max-width:560px;color:#5c554b;font-size:17px}
+
+.section-head{display:flex;align-items:baseline;gap:26px;padding:0 5vw;margin-bottom:64px}
+.section-head .num{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:2px}
+.section-head h3{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,48px);letter-spacing:.06em}
+.services{padding:16vh 0}
+.service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(176,141,87,.25);margin:0 5vw}
+.service{background:var(--charcoal);padding:52px 40px;transition:background .4s}
+.service:hover{background:var(--charcoal-2)}
+.service .g{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:2px;display:block;margin-bottom:22px}
+.service h4{font-family:var(--serif);font-weight:400;font-size:26px;letter-spacing:.04em;margin-bottom:16px}
+.service p{font-size:15.5px;color:rgba(246,241,232,.62)}
+
+.work{padding:4vh 0 16vh}
+.work-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px;margin:0 5vw}
+.tile{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--charcoal-2);border:1px solid rgba(176,141,87,.25);display:flex;align-items:center;justify-content:center;transition:border-color .4s}
+.tile:hover{border-color:var(--gold)}
+.tile svg{width:72px;height:72px;opacity:.5;transition:opacity .4s,transform .6s}
+.tile:hover svg{opacity:1;transform:scale(1.08)}
+.tile .label{position:absolute;left:26px;bottom:20px;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(246,241,232,.7)}
+
+.contact{background:var(--ivory);color:var(--charcoal);padding:18vh 5vw;text-align:center}
+.contact h3{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,64px);letter-spacing:.06em}
+.contact p{margin:26px auto 0;max-width:480px;color:#5c554b;font-size:17px}
+.contact a.cta{display:inline-block;margin-top:48px;padding:18px 54px;border:1px solid var(--gold);color:var(--charcoal);text-decoration:none;font-size:14px;letter-spacing:4px;text-transform:uppercase;transition:background .35s,color .35s}
+.contact a.cta:hover{background:var(--gold);color:#fff}
+
+footer{padding:44px 5vw;display:flex;align-items:center;justify-content:space-between;font-size:13px;letter-spacing:2px;color:rgba(246,241,232,.5)}
+footer .fm{display:flex;align-items:center;gap:12px}
+footer svg{width:26px;height:26px}
+
+.reveal{opacity:0;transform:translateY(46px);will-change:opacity,transform}
+
+@media (max-width:720px){
+  .nav-links a{display:none}
+  .section-head{flex-direction:column;gap:8px}
+  .hero-caption{top:64%}
+  .hero-caption h1{letter-spacing:.32em;text-indent:.32em}
+}
+</style>
+</head>
+<body class="gated">
+
+<div id="gate">
+  <svg class="gate-mark" viewBox="0 0 140 140" role="img" aria-label="Grandezza Design">
+    <g transform="translate(70,70)" fill="none" stroke="#B08D57">
+      <circle r="58" stroke-width="1.5"/>
+      <circle r="53" stroke-width="0.75"/>
+      <path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/>
+    </g>
+  </svg>
+  <h2>GRANDEZZA</h2>
+  <div class="gate-sub"><span class="rule"></span><span>Design</span><span class="rule"></span></div>
+  <div class="choose">
+    <p>Bitte wählen Sie Ihre Sprache&ensp;·&ensp;Please choose your language</p>
+    <div class="langs">
+      <button class="lang" data-lang="de" lang="de">
+        <span class="word">Deutsch</span>
+        <span class="underline"></span>
+        <span class="hint">Weiter auf Deutsch</span>
+      </button>
+      <span class="divider" aria-hidden="true"></span>
+      <button class="lang" data-lang="en" lang="en">
+        <span class="word">English</span>
+        <span class="underline"></span>
+        <span class="hint">Continue in English</span>
+      </button>
+    </div>
+  </div>
+  <div class="gate-foot">Grandezza Design · Bremen</div>
+</div>
+
+<div id="progress"></div>
+
+<nav id="nav">
+  <a class="nav-brand" href="#top">
+    <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="4"/><circle r="48" stroke-width="2"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="7"/></g></svg>
+    <span>GRANDEZZA</span>
+  </a>
+  <div class="nav-links">
+    <a href="#leistungen" data-de="Leistungen" data-en="Services">Leistungen</a>
+    <a href="#arbeiten" data-de="Arbeiten" data-en="Work">Arbeiten</a>
+    <a href="#kontakt" data-de="Kontakt" data-en="Contact">Kontakt</a>
+    <button id="langToggle" aria-label="Sprache wechseln / switch language">EN</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="hero-caption">
+    <h1>GRANDEZZA</h1>
+    <p data-de="Studio für Web- &amp; Marketingdesign — Bremen" data-en="Web &amp; marketing design studio — Bremen">Studio für Web- &amp; Marketingdesign — Bremen</p>
+  </div>
+  <div class="hero-foot">
+    <span class="coords">53° 04′ N · 8° 48′ E — Bremen</span>
+    <span class="cue"></span>
+  </div>
+</header>
+
+<section class="statement">
+  <h2 class="reveal" data-de="Gutes Design flüstert nicht.<br>Es betritt den Raum <em>mit Grandezza.</em>" data-en="Good design doesn&amp;rsquo;t whisper.<br>It enters the room <em>with grandezza.</em>">Gutes Design flüstert nicht.<br>Es betritt den Raum <em>mit Grandezza.</em></h2>
+  <p class="reveal" data-de="Wir gestalten Websites, Marken und Kampagnen für Unternehmen, die auffallen wollen – hanseatisch im Anspruch, großzügig im Auftritt." data-en="We craft websites, brands and campaigns for businesses that want to stand out — Hanseatic in standards, generous in style.">Wir gestalten Websites, Marken und Kampagnen für Unternehmen, die auffallen wollen – hanseatisch im Anspruch, großzügig im Auftritt.</p>
+</section>
+
+<section class="services" id="leistungen">
+  <div class="section-head reveal">
+    <span class="num">01</span>
+    <h3 data-de="Leistungen" data-en="Services">Leistungen</h3>
+  </div>
+  <div class="service-grid">
+    <div class="service reveal">
+      <span class="g">I</span>
+      <h4 data-de="Webdesign" data-en="Web design">Webdesign</h4>
+      <p data-de="Maßgeschneiderte Websites und Onlineshops – schnell, elegant und gebaut, um zu verkaufen. Vom Konzept bis zum Livegang." data-en="Tailor-made websites and online shops — fast, elegant and built to sell. From first concept to launch day.">Maßgeschneiderte Websites und Onlineshops – schnell, elegant und gebaut, um zu verkaufen. Vom Konzept bis zum Livegang.</p>
+    </div>
+    <div class="service reveal">
+      <span class="g">II</span>
+      <h4 data-de="Branding &amp; Logo" data-en="Branding &amp; logo">Branding &amp; Logo</h4>
+      <p data-de="Markenidentitäten mit Charakter: Logo, Typografie, Farbwelt und ein Auftritt, der auf Anhieb sitzt – auf jedem Kanal." data-en="Brand identities with character: logo, typography, colour palette and a presence that fits from day one — on every channel.">Markenidentitäten mit Charakter: Logo, Typografie, Farbwelt und ein Auftritt, der auf Anhieb sitzt – auf jedem Kanal.</p>
+    </div>
+    <div class="service reveal">
+      <span class="g">III</span>
+      <h4 data-de="Marketing &amp; Kampagnen" data-en="Marketing &amp; campaigns">Marketing &amp; Kampagnen</h4>
+      <p data-de="Social Media, Anzeigen und Content mit klarer Strategie. Weniger Lärm, mehr Wirkung – messbar und markengerecht." data-en="Social media, advertising and content with a clear strategy. Less noise, more impact — measurable and on-brand.">Social Media, Anzeigen und Content mit klarer Strategie. Weniger Lärm, mehr Wirkung – messbar und markengerecht.</p>
+    </div>
+  </div>
+</section>
+
+<section class="work" id="arbeiten">
+  <div class="section-head reveal">
+    <span class="num">02</span>
+    <h3 data-de="Ausgewählte Arbeiten" data-en="Selected work">Ausgewählte Arbeiten</h3>
+  </div>
+  <div class="work-grid">
+    <div class="tile reveal">
+      <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="1.5"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/></g></svg>
+      <span class="label" data-de="Projekt 01 — bald" data-en="Project 01 — soon">Projekt 01 — bald</span>
+    </div>
+    <div class="tile reveal">
+      <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="1.5"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/></g></svg>
+      <span class="label" data-de="Projekt 02 — bald" data-en="Project 02 — soon">Projekt 02 — bald</span>
+    </div>
+    <div class="tile reveal">
+      <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="1.5"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/></g></svg>
+      <span class="label" data-de="Projekt 03 — bald" data-en="Project 03 — soon">Projekt 03 — bald</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="kontakt">
+  <h3 class="reveal" data-de="Lassen Sie uns reden." data-en="Let&amp;rsquo;s talk.">Lassen Sie uns reden.</h3>
+  <p class="reveal" data-de="Ein neues Projekt, ein Relaunch oder erst einmal eine Idee? Wir freuen uns auf Ihre Nachricht – Kaffee gibt es in Bremen dazu." data-en="A new project, a relaunch, or just the first spark of an idea? We&amp;rsquo;d love to hear from you — the coffee in Bremen is on us.">Ein neues Projekt, ein Relaunch oder erst einmal eine Idee? Wir freuen uns auf Ihre Nachricht – Kaffee gibt es in Bremen dazu.</p>
+  <a class="cta reveal" href="mailto:hallo@grandezza.design" data-de="Projekt anfragen" data-en="Start a project">Projekt anfragen</a>
+</section>
+
+<footer>
+  <div class="fm">
+    <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="4"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="7"/></g></svg>
+    <span>GRANDEZZA DESIGN · BREMEN</span>
+  </div>
+  <span data-de="© 2026 · Impressum · Datenschutz" data-en="© 2026 · Legal notice · Privacy">© 2026 · Impressum · Datenschutz</span>
+</footer>
+
+<script>
+var gate=document.getElementById('gate');
+var toggle=document.getElementById('langToggle');
+var titles={de:'Grandezza Design — Web- & Marketingdesign aus Bremen',en:'Grandezza Design — Web & Marketing Design from Bremen'};
+
+function setLang(l){
+  document.documentElement.lang=l;
+  document.title=titles[l];
+  document.querySelectorAll('[data-de]').forEach(function(el){el.innerHTML=el.getAttribute('data-'+l)});
+  toggle.textContent=(l==='de')?'EN':'DE';
+  toggle.dataset.current=l;
+  try{localStorage.setItem('gdz-lang',l)}catch(e){}
+}
+
+function enter(l,instant){
+  setLang(l);
+  document.body.classList.remove('gated');
+  document.body.classList.add('entered');
+  startHero();
+  if(instant){gate.remove()}
+  else{gate.classList.add('closed');setTimeout(function(){gate.remove()},1000)}
+}
+
+var heroStarted=false;
+function startHero(){
+  if(heroStarted)return;heroStarted=true;
+  var canvas=document.getElementById('particles');
+  var ctx=canvas.getContext('2d');
+  var hero=canvas.parentElement;
+  var W,H,CX,CY,S,dpr=Math.min(devicePixelRatio||1,2);
+  var mouse={x:-9999,y:-9999};
+  var pts=[];
+  var COLORS=['#F6F1E8','#F6F1E8','#F6F1E8','#D4B678','#D4B678','#B08D57','#9ED9D2'];
+
+  function resize(){
+    W=hero.clientWidth;H=hero.clientHeight;
+    canvas.width=W*dpr;canvas.height=H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    CX=W/2;CY=H*0.42;S=Math.min(W,H)/195;
+    if(pts.length)assignHomes();
+  }
+
+  function homeFor(i,n){
+    var u=Math.random(),a;
+    if(i<n*0.26){a=Math.random()*6.2832;return[CX+Math.cos(a)*58*S,CY+Math.sin(a)*58*S]}
+    if(i<n*0.44){a=Math.random()*6.2832;return[CX+Math.cos(a)*52*S,CY+Math.sin(a)*52*S]}
+    if(i<n*0.70){
+      if(u<0.85){a=-0.7854-Math.random()*5.4978;return[CX+Math.cos(a)*30*S,CY+Math.sin(a)*30*S]}
+      return[CX+(10+Math.random()*20)*S,CY]
+    }
+    var dx=(Math.random()+Math.random()+Math.random()-1.5)/1.5;
+    return[CX+dx*95*S,CY+(42+Math.pow(Math.random(),1.6)*95)*S]
+  }
+
+  function assignHomes(){
+    for(var i=0;i<pts.length;i++){var h=homeFor(i,pts.length);pts[i].hx=h[0];pts[i].hy=h[1]}
+  }
+
+  var N=Math.min(820,Math.max(420,Math.round(W*H/1400)||600));
+  function build(){
+    pts=[];
+    for(var i=0;i<N;i++){
+      pts.push({x:Math.random()*W,y:Math.random()*H,vx:0,vy:0,hx:0,hy:0,
+        r:0.6+Math.random()*1.5,c:COLORS[(Math.random()*COLORS.length)|0],
+        tw:0.5+Math.random()*2.2,ph:Math.random()*6.2832,
+        base:0.25+Math.random()*0.55,dust:i>=N*0.70});
+    }
+    assignHomes();
+  }
+
+  hero.addEventListener('mousemove',function(e){var b=canvas.getBoundingClientRect();mouse.x=e.clientX-b.left;mouse.y=e.clientY-b.top});
+  hero.addEventListener('mouseleave',function(){mouse.x=-9999;mouse.y=-9999});
+  addEventListener('resize',resize);
+
+  var t0=performance.now();
+  var lastDraw=0;
+  function frame(now){
+    lastDraw=now;
+    var t=(now-t0)/1000;
+    ctx.clearRect(0,0,W,H);
+    var P=window.__scrollP||0;
+    var fade=1-P*0.85;
+    for(var i=0;i<pts.length;i++){
+      var p=pts[i];
+      var ex=CX+(p.hx-CX)*(1+P*2.4);
+      var ey=CY+(p.hy-CY)*(1+P*2.4)-P*140;
+      p.vx+=(ex-p.x)*0.018;p.vy+=(ey-p.y)*0.018;
+      p.vx+=(Math.random()-0.5)*0.13;p.vy+=(Math.random()-0.5)*0.13;
+      if(p.dust){p.vy+=0.004}
+      var dx=p.x-mouse.x,dy=p.y-mouse.y,d2=dx*dx+dy*dy;
+      if(d2<12100&&d2>0.01){var d=Math.sqrt(d2),f=(110-d)/110*1.6;p.vx+=dx/d*f;p.vy+=dy/d*f}
+      p.vx*=0.9;p.vy*=0.9;
+      p.x+=p.vx;p.y+=p.vy;
+      var a=(p.base+0.4*Math.sin(t*p.tw+p.ph))*fade;
+      if(a<0.03)a=0.03;if(a>1)a=1;
+      ctx.globalAlpha=a;
+      ctx.fillStyle=p.c;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.2832);ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    if(typeof runScrub==='function')runScrub();
+  }
+  function raf(now){frame(now);requestAnimationFrame(raf)}
+  resize();build();requestAnimationFrame(raf);
+  setInterval(function(){var n=performance.now();if(n-lastDraw>120)frame(n)},66);
+}
+
+document.querySelectorAll('button.lang').forEach(function(b){
+  b.addEventListener('click',function(){enter(b.dataset.lang,false)});
+});
+
+toggle.addEventListener('click',function(){
+  setLang(toggle.dataset.current==='de'?'en':'de');
+});
+
+var saved=null;
+try{saved=localStorage.getItem('gdz-lang')}catch(e){}
+if(saved==='de'||saved==='en'){enter(saved,true)}
+
+var nav=document.getElementById('nav');
+var progress=document.getElementById('progress');
+var caption=document.querySelector('.hero-caption');
+var heroFoot=document.querySelector('.hero-foot');
+[caption,heroFoot].forEach(function(el){
+  el.addEventListener('animationend',function(){el.style.opacity=1;el.style.animation='none'});
+});
+var reveals=[].slice.call(document.querySelectorAll('.reveal'));
+document.querySelectorAll('.service-grid .service, .work-grid .tile').forEach(function(el,i){
+  el.__stag=(i%3)*0.08;
+});
+var tops=[];
+function measure(){
+  var sy=window.pageYOffset||document.documentElement.scrollTop||0;
+  for(var i=0;i<reveals.length;i++){
+    tops[i]=reveals[i].getBoundingClientRect().top+sy;
+  }
+}
+measure();
+addEventListener('load',measure);
+addEventListener('resize',measure);
+setTimeout(measure,600);setTimeout(measure,1600);
+
+function onScroll(){nav.classList.toggle('scrolled',scrollY>60)}
+addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+
+var smoothY=window.pageYOffset||0;
+function runScrub(){
+  var target=window.pageYOffset||document.documentElement.scrollTop||0;
+  smoothY+=(target-smoothY)*0.11;
+  if(Math.abs(target-smoothY)<0.5)smoothY=target;
+  var vh=innerHeight;
+
+  var P=Math.min(1,smoothY/(vh*0.9));
+  window.__scrollP=P;
+  if(caption.style.animation==='none'){
+    var o=1-P*1.5;caption.style.opacity=o<0?0:o;
+    caption.style.translate='0 '+(-P*70)+'px';
+  }
+  if(heroFoot.style.animation==='none'){
+    var o2=1-P*2;heroFoot.style.opacity=o2<0?0:o2;
+  }
+  var max=document.documentElement.scrollHeight-vh;
+  progress.style.width=(max>0?Math.min(100,smoothY/max*100):0)+'%';
+
+  var trigger=vh*0.9,dist=vh*0.55;
+  for(var i=0;i<reveals.length;i++){
+    var vTop=tops[i]-smoothY;
+    var q=(trigger-vTop)/dist-(reveals[i].__stag||0);
+    if(q<0)q=0;if(q>1)q=1;
+    q=q*q*(3-2*q);
+    reveals[i].style.opacity=q;
+    reveals[i].style.transform='translate3d(0,'+((1-q)*48).toFixed(1)+'px,0)';
+  }
+}
+</script>
+</body>
+</html>
