@@ -124,6 +124,46 @@ footer svg{width:26px;height:26px}
 
 .reveal{opacity:0;transform:translateY(46px);will-change:opacity,transform}
 
+.marquee{background:var(--charcoal);position:relative;z-index:2;overflow:hidden;padding:9vh 0;border-top:1px solid rgba(176,141,87,.18);border-bottom:1px solid rgba(176,141,87,.18)}
+.marquee .track{display:flex;white-space:nowrap;width:max-content;animation:marq 46s linear infinite}
+.marquee span{font-family:var(--serif);font-size:clamp(44px,7.5vw,110px);letter-spacing:.05em;color:transparent;-webkit-text-stroke:1px rgba(212,182,120,.5);padding-right:5vw}
+.marquee span.solid{font-style:italic;color:var(--gold-light);-webkit-text-stroke:0}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+.cosmos{background:var(--charcoal);position:relative;z-index:2;padding:16vh 5vw;overflow:hidden}
+.cosmos .cos-label{text-align:center;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:9vh}
+.cosmos-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(18px,5vw,80px);align-items:center;max-width:1100px;margin:0 auto}
+.cos-col{display:flex;flex-direction:column;gap:26px}
+.cos-col.left{align-items:flex-end;text-align:right}
+.cos-col.right{align-items:flex-start}
+.cos-item{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(246,241,232,.6);transition:color .3s}
+.cos-item:hover{color:var(--gold-light)}
+.cos-item .tick{display:inline-block;width:clamp(14px,3vw,34px);height:1px;background:rgba(176,141,87,.5);vertical-align:middle}
+.cos-col.left .tick{margin-left:14px}
+.cos-col.right .tick{margin-right:14px}
+.cos-center{width:clamp(110px,15vw,180px)}
+.cos-center svg{width:100%;height:auto;filter:drop-shadow(0 0 18px rgba(212,182,120,.35))}
+
+.services{padding-bottom:14vh}
+.orbit-stage{position:relative;width:min(88vw,780px);height:min(62vw,520px);margin:4vh auto 0}
+.orbit-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(90px,12vw,150px);z-index:50;filter:drop-shadow(0 0 18px rgba(212,182,120,.35))}
+.orbit-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:88%;height:64%;border:1px solid rgba(176,141,87,.22);border-radius:50%}
+.orbit-card{position:absolute;left:50%;top:50%;width:clamp(150px,22vw,260px);aspect-ratio:4/3;cursor:pointer;border:1px solid rgba(176,141,87,.35);overflow:hidden;will-change:transform,opacity;transform:translate(-50%,-50%);transition:border-color .4s,box-shadow .4s}
+.orbit-card img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.orbit-card.active{border-color:var(--gold-light);box-shadow:0 0 34px rgba(176,141,87,.3)}
+.orbit-label{text-align:center;margin-top:5vh;min-height:96px;padding:0 5vw}
+.orbit-label h4{font-family:var(--serif);font-weight:400;font-style:italic;font-size:clamp(30px,4.5vw,54px);letter-spacing:.04em;color:var(--gold-light);margin:0}
+.orbit-label p{margin-top:12px;font-size:13.5px;letter-spacing:2px;color:rgba(246,241,232,.55)}
+.orbit-hint{text-align:center;margin-top:20px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(246,241,232,.35)}
+
+.workcloud{background:var(--charcoal);position:relative;z-index:2;min-height:115vh;overflow:hidden}
+.float-item{position:absolute;overflow:hidden;border:1px solid rgba(176,141,87,.3);will-change:transform;background:var(--charcoal-2)}
+.float-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s,opacity .6s;opacity:.85}
+.float-item:hover img{transform:scale(1.07);opacity:1}
+.float-item .cap{position:absolute;left:12px;bottom:10px;font-size:11px;letter-spacing:2px;color:rgba(246,241,232,.8);text-transform:uppercase;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.float-item.tile{display:flex;align-items:center;justify-content:center}
+.float-item.tile svg{width:44%;opacity:.6}
+
 @media (max-width:720px){
   .nav-links a{display:none}
   .section-head{flex-direction:column;gap:8px}
@@ -210,48 +250,84 @@ footer svg{width:26px;height:26px}
   <p class="reveal" data-de="Wir gestalten Websites, Marken und Kampagnen für Unternehmen, die auffallen wollen – hanseatisch im Anspruch, großzügig im Auftritt." data-en="We craft websites, brands and campaigns for businesses that want to stand out — Hanseatic in standards, generous in style.">Wir gestalten Websites, Marken und Kampagnen für Unternehmen, die auffallen wollen – hanseatisch im Anspruch, großzügig im Auftritt.</p>
 </section>
 
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Webdesign</span><span class="solid">Branding</span><span>Marketing</span><span class="solid">Bremen</span><span>Grandezza</span>
+    <span>Webdesign</span><span class="solid">Branding</span><span>Marketing</span><span class="solid">Bremen</span><span>Grandezza</span>
+  </div>
+</div>
+
+<section class="cosmos">
+  <p class="cos-label reveal" data-de="( Unser Kosmos )" data-en="( Our cosmos )">( Unser Kosmos )</p>
+  <div class="cosmos-grid">
+    <div class="cos-col left">
+      <span class="cos-item reveal" data-de="Webdesign<span class='tick'></span>" data-en="Web design<span class='tick'></span>">Webdesign<span class="tick"></span></span>
+      <span class="cos-item reveal" data-de="Onlineshops<span class='tick'></span>" data-en="Online shops<span class='tick'></span>">Onlineshops<span class="tick"></span></span>
+      <span class="cos-item reveal" data-de="UX &amp; Interaktion<span class='tick'></span>" data-en="UX &amp; interaction<span class='tick'></span>">UX &amp; Interaktion<span class="tick"></span></span>
+      <span class="cos-item reveal" data-de="Motion &amp; Animation<span class='tick'></span>" data-en="Motion &amp; animation<span class='tick'></span>">Motion &amp; Animation<span class="tick"></span></span>
+      <span class="cos-item reveal" data-de="SEO &amp; Sichtbarkeit<span class='tick'></span>" data-en="SEO &amp; visibility<span class='tick'></span>">SEO &amp; Sichtbarkeit<span class="tick"></span></span>
+    </div>
+    <div class="cos-center reveal">
+      <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="1.5"/><circle r="53" stroke-width="0.75"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/></g></svg>
+    </div>
+    <div class="cos-col right">
+      <span class="cos-item reveal" data-de="<span class='tick'></span>Markenstrategie" data-en="<span class='tick'></span>Brand strategy"><span class="tick"></span>Markenstrategie</span>
+      <span class="cos-item reveal" data-de="<span class='tick'></span>Logo &amp; Identität" data-en="<span class='tick'></span>Logo &amp; identity"><span class="tick"></span>Logo &amp; Identität</span>
+      <span class="cos-item reveal" data-de="<span class='tick'></span>Kampagnen" data-en="<span class='tick'></span>Campaigns"><span class="tick"></span>Kampagnen</span>
+      <span class="cos-item reveal" data-de="<span class='tick'></span>Social Media" data-en="<span class='tick'></span>Social media"><span class="tick"></span>Social Media</span>
+      <span class="cos-item reveal" data-de="<span class='tick'></span>Content" data-en="<span class='tick'></span>Content"><span class="tick"></span>Content</span>
+    </div>
+  </div>
+</section>
+
 <section class="services" id="leistungen">
   <div class="section-head reveal">
     <span class="num">( 01 )</span>
     <h3 data-de="Leistungen" data-en="Services">Leistungen</h3>
   </div>
-  <div class="service-grid">
-    <div class="service reveal">
-      <span class="g">( I )</span>
-      <h4 data-de="Webdesign" data-en="Web design">Webdesign</h4>
-      <p data-de="Maßgeschneiderte Websites und Onlineshops – schnell, elegant und gebaut, um zu verkaufen. Vom Konzept bis zum Livegang." data-en="Tailor-made websites and online shops — fast, elegant and built to sell. From first concept to launch day.">Maßgeschneiderte Websites und Onlineshops – schnell, elegant und gebaut, um zu verkaufen. Vom Konzept bis zum Livegang.</p>
+  <div class="orbit-stage reveal">
+    <div class="orbit-ring" aria-hidden="true"></div>
+    <svg class="orbit-center" viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="1.5"/><circle r="53" stroke-width="0.75"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/></g></svg>
+    <div class="orbit-card" data-t-de="Webdesign" data-t-en="Web design" data-d-de="( Maßgeschneiderte Websites &amp; Onlineshops — vom Konzept bis zum Livegang )" data-d-en="( Tailor-made websites &amp; online shops — from concept to launch )">
+      <img src="assets/webdesign.jpg" alt="Webdesign">
     </div>
-    <div class="service reveal">
-      <span class="g">( II )</span>
-      <h4 data-de="Branding &amp; Logo" data-en="Branding &amp; logo">Branding &amp; Logo</h4>
-      <p data-de="Markenidentitäten mit Charakter: Logo, Typografie, Farbwelt und ein Auftritt, der auf Anhieb sitzt – auf jedem Kanal." data-en="Brand identities with character: logo, typography, colour palette and a presence that fits from day one — on every channel.">Markenidentitäten mit Charakter: Logo, Typografie, Farbwelt und ein Auftritt, der auf Anhieb sitzt – auf jedem Kanal.</p>
+    <div class="orbit-card" data-t-de="Branding &amp; Logo" data-t-en="Branding &amp; logo" data-d-de="( Markenidentitäten mit Charakter — auf jedem Kanal sofort erkennbar )" data-d-en="( Brand identities with character — instantly recognisable on every channel )">
+      <img src="assets/branding.jpg" alt="Branding und Logo">
     </div>
-    <div class="service reveal">
-      <span class="g">( III )</span>
-      <h4 data-de="Marketing &amp; Kampagnen" data-en="Marketing &amp; campaigns">Marketing &amp; Kampagnen</h4>
-      <p data-de="Social Media, Anzeigen und Content mit klarer Strategie. Weniger Lärm, mehr Wirkung – messbar und markengerecht." data-en="Social media, advertising and content with a clear strategy. Less noise, more impact — measurable and on-brand.">Social Media, Anzeigen und Content mit klarer Strategie. Weniger Lärm, mehr Wirkung – messbar und markengerecht.</p>
+    <div class="orbit-card" data-t-de="Marketing &amp; Kampagnen" data-t-en="Marketing &amp; campaigns" data-d-de="( Weniger Lärm, mehr Wirkung — messbar und markengerecht )" data-d-en="( Less noise, more impact — measurable and on-brand )">
+      <img src="assets/marketing.jpg" alt="Marketing und Kampagnen">
     </div>
   </div>
+  <div class="orbit-label reveal">
+    <h4 id="orbit-title">Webdesign</h4>
+    <p id="orbit-desc">( Maßgeschneiderte Websites &amp; Onlineshops — vom Konzept bis zum Livegang )</p>
+  </div>
+  <p class="orbit-hint reveal" data-de="( Karte anklicken oder Orbit abwarten )" data-en="( Click a card or let the orbit turn )">( Karte anklicken oder Orbit abwarten )</p>
 </section>
 
-<section class="work" id="arbeiten">
-  <div class="section-head reveal">
+<section class="workcloud" id="arbeiten">
+  <div class="section-head reveal" style="padding-top:12vh">
     <span class="num">( 02 )</span>
     <h3 data-de="Ausgewählte Arbeiten" data-en="Selected work">Ausgewählte Arbeiten</h3>
   </div>
-  <div class="work-grid">
-    <div class="tile reveal">
-      <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="1.5"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/></g></svg>
-      <span class="label" data-de="Projekt 01 — bald" data-en="Project 01 — soon">Projekt 01 — bald</span>
-    </div>
-    <div class="tile reveal">
-      <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="1.5"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/></g></svg>
-      <span class="label" data-de="Projekt 02 — bald" data-en="Project 02 — soon">Projekt 02 — bald</span>
-    </div>
-    <div class="tile reveal">
-      <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="1.5"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/></g></svg>
-      <span class="label" data-de="Projekt 03 — bald" data-en="Project 03 — soon">Projekt 03 — bald</span>
-    </div>
+  <div class="float-item reveal" data-depth="-0.08" style="left:6vw;top:28%;width:min(34vw,420px);aspect-ratio:4/3">
+    <img src="assets/webdesign.jpg" alt="Webdesign Projekt">
+    <span class="cap" data-de="Webdesign — bald" data-en="Web design — soon">Webdesign — bald</span>
+  </div>
+  <div class="float-item reveal" data-depth="0.1" style="right:8vw;top:22%;width:min(22vw,280px);aspect-ratio:4/3">
+    <img src="assets/branding.jpg" alt="Branding Projekt">
+    <span class="cap" data-de="Branding — bald" data-en="Branding — soon">Branding — bald</span>
+  </div>
+  <div class="float-item reveal" data-depth="0.05" style="left:14vw;top:62%;width:min(20vw,250px);aspect-ratio:4/3">
+    <img src="assets/marketing.jpg" alt="Marketing Projekt">
+    <span class="cap" data-de="Kampagne — bald" data-en="Campaign — soon">Kampagne — bald</span>
+  </div>
+  <div class="float-item reveal tile" data-depth="-0.12" style="left:48%;top:52%;width:min(16vw,200px);aspect-ratio:1">
+    <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="1.5"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/></g></svg>
+  </div>
+  <div class="float-item reveal" data-depth="0.14" style="right:16vw;top:66%;width:min(26vw,320px);aspect-ratio:4/3">
+    <img src="assets/branding.jpg" alt="Branding Detail">
+    <span class="cap" data-de="Identität — bald" data-en="Identity — soon">Identität — bald</span>
   </div>
 </section>
 
@@ -280,7 +356,7 @@ function setLang(l){
   document.querySelectorAll('[data-de]').forEach(function(el){el.innerHTML=el.getAttribute('data-'+l)});
   toggle.textContent=(l==='de')?'EN':'DE';
   toggle.dataset.current=l;
-  try{localStorage.setItem('gdz-lang',l)}catch(e){}
+  try{sessionStorage.setItem('gdz-lang',l)}catch(e){}
 }
 
 function enter(l,instant){
@@ -416,7 +492,7 @@ toggle.addEventListener('click',function(){
 });
 
 var saved=null;
-try{saved=localStorage.getItem('gdz-lang')}catch(e){}
+try{saved=sessionStorage.getItem('gdz-lang');localStorage.removeItem('gdz-lang')}catch(e){}
 if(saved==='de'||saved==='en'){enter(saved,true)}
 
 var nav=document.getElementById('nav');
@@ -427,15 +503,21 @@ var heroFoot=document.querySelector('.hero-foot');
   el.addEventListener('animationend',function(){el.style.opacity=1;el.style.animation='none'});
 });
 var reveals=[].slice.call(document.querySelectorAll('.reveal'));
-document.querySelectorAll('.service-grid .service, .work-grid .tile').forEach(function(el,i){
-  el.__stag=(i%3)*0.08;
+reveals.forEach(function(el){
+  if(el.dataset.depth)el.__depth=parseFloat(el.dataset.depth);
+});
+document.querySelectorAll('.svc-row, .cos-item').forEach(function(el,i){
+  el.__stag=(i%5)*0.05;
 });
 var tops=[];
+var oStageW=0,oStageH=0;
 function measure(){
   var sy=window.pageYOffset||document.documentElement.scrollTop||0;
   for(var i=0;i<reveals.length;i++){
     tops[i]=reveals[i].getBoundingClientRect().top+sy;
   }
+  var st=document.querySelector('.orbit-stage');
+  if(st){var sr=st.getBoundingClientRect();oStageW=sr.width;oStageH=sr.height}
 }
 measure();
 addEventListener('load',measure);
@@ -471,8 +553,67 @@ function runScrub(){
     var q=(trigger-vTop)/dist-(reveals[i].__stag||0);
     if(q<0)q=0;if(q>1)q=1;
     q=q*q*(3-2*q);
+    var extra=0;
+    if(reveals[i].__depth)extra=(vTop-vh*0.5)*reveals[i].__depth;
     reveals[i].style.opacity=q;
-    reveals[i].style.transform='translate3d(0,'+((1-q)*48).toFixed(1)+'px,0)';
+    reveals[i].style.transform='translate3d(0,'+(((1-q)*48)+extra).toFixed(1)+'px,0)';
+  }
+  orbitTick();
+}
+
+var orbitCards=[].slice.call(document.querySelectorAll('.orbit-card'));
+var oTitle=document.getElementById('orbit-title');
+var oDesc=document.getElementById('orbit-desc');
+var oAng=Math.PI/2,oVel=0.0032,oHover=false,oTarget=null,oResume=0,oActive=-1;
+var THIRD=2*Math.PI/3;
+orbitCards.forEach(function(c,i){
+  c.addEventListener('mouseenter',function(){oHover=true});
+  c.addEventListener('mouseleave',function(){oHover=false;oResume=Date.now()+600});
+  c.addEventListener('click',function(){
+    var cur=oAng+i*THIRD;
+    var delta=(Math.PI/2-cur)%(2*Math.PI);
+    if(delta>Math.PI)delta-=2*Math.PI;
+    if(delta<-Math.PI)delta+=2*Math.PI;
+    oTarget=oAng+delta;
+    oResume=Date.now()+4000;
+  });
+});
+function orbitTick(){
+  if(!orbitCards.length||!oStageW)return;
+  if(oTarget!==null){
+    var d=oTarget-oAng;
+    oAng+=d*0.08;
+    if(Math.abs(d)<0.002){oAng=oTarget;oTarget=null}
+  }else if(!oHover&&Date.now()>oResume){
+    oAng+=oVel;
+  }
+  var rx=oStageW*0.42,ry=oStageH*0.30;
+  var best=-1,bestS=-2;
+  for(var i=0;i<orbitCards.length;i++){
+    var a=oAng+i*THIRD;
+    var s=Math.sin(a);
+    var n=(s+1)/2;
+    var x=Math.cos(a)*rx;
+    var y=s*ry;
+    var sc=0.66+0.34*n;
+    var card=orbitCards[i];
+    card.style.transform='translate(-50%,-50%) translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0) scale('+sc.toFixed(3)+')';
+    card.style.zIndex=Math.round(20+n*60);
+    card.style.opacity=(0.45+0.55*n).toFixed(3);
+    if(s>bestS){bestS=s;best=i}
+  }
+  if(best!==oActive){
+    oActive=best;
+    orbitCards.forEach(function(cc,ii){cc.classList.toggle('active',ii===oActive)});
+  }
+  if(oActive>=0&&oTitle){
+    var L=(document.documentElement.lang==='en')?'en':'de';
+    var ac=orbitCards[oActive];
+    var tt=ac.getAttribute('data-t-'+L);
+    if(oTitle.textContent!==tt){
+      oTitle.textContent=tt;
+      oDesc.textContent=ac.getAttribute('data-d-'+L);
+    }
   }
 }
 
