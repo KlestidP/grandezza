@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grandezza — Backend Architecture Flowchart</title>
+<meta name="description" content="How Grandezza's backend connects: the acquisition engine, the shared platform spine, and the client delivery engine.">
+<style>
+:root{
+  --bg:#F6F1E8;
+  --surface:#FFFFFF;
+  --surface-2:#EFE8DA;
+  --ink:#1C1917;
+  --ink-dim:#5C554B;
+  --border:rgba(28,25,23,.16);
+  --gold:#9C7A48;
+  --gold-ink:#7A5D35;
+  --gold-soft:rgba(140,106,63,.10);
+  --slate:#3F4A46;
+  --slate-soft:rgba(63,74,70,.08);
+  --line:#3A3530;
+  --line-soft:rgba(58,53,48,.32);
+  --pill-bg:#1C1917;
+  --pill-ink:#F6F1E8;
+
+  --font-display:"Iowan Old Style","Palatino Linotype",Palatino,"URW Palladio L",Georgia,serif;
+  --font-body:"Century Gothic","Futura PT",Futura,"Avenir Next",Avenir,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,"SF Mono","Cascadia Code",Consolas,"Roboto Mono",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#17140F;
+    --surface:#232019;
+    --surface-2:#2A251E;
+    --ink:#F6F1E8;
+    --ink-dim:rgba(246,241,232,.64);
+    --border:rgba(246,241,232,.14);
+    --gold:#D4B678;
+    --gold-ink:#D4B678;
+    --gold-soft:rgba(212,182,120,.13);
+    --slate:#9FACA7;
+    --slate-soft:rgba(159,172,167,.13);
+    --line:rgba(246,241,232,.6);
+    --line-soft:rgba(246,241,232,.26);
+    --pill-bg:#D4B678;
+    --pill-ink:#17140F;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+.page{
+  background:var(--bg); color:var(--ink); font-family:var(--font-body);
+  min-height:100vh; padding:6vh 5vw 8vh;
+}
+.wrap{max-width:1240px;margin:0 auto}
+.eyebrow{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--gold-ink); margin:0 0 14px;
+}
+h1{
+  font-family:var(--font-display); font-weight:400; font-size:clamp(30px,4vw,44px);
+  letter-spacing:.01em; margin:0 0 14px; text-wrap:balance;
+}
+.dek{
+  font-size:16px; line-height:1.6; color:var(--ink-dim); max-width:62ch; margin:0 0 34px;
+}
+
+.legend{
+  display:flex; flex-wrap:wrap; gap:10px 26px; align-items:center;
+  padding:14px 18px; margin-bottom:30px;
+  background:var(--surface); border:1px solid var(--border); border-radius:3px;
+}
+.legend-item{display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--ink-dim)}
+.swatch{flex:none}
+.sw-dot{width:11px;height:11px;border-radius:50%}
+.sw-gold-dot{background:var(--gold)}
+.sw-slate-dot{background:var(--slate)}
+.sw-dash{width:26px;height:0;border-top:2px dashed var(--slate)}
+.sw-line{width:26px;height:0;border-top:3px solid var(--gold)}
+
+.diagram-shell{
+  background:var(--surface); border:1px solid var(--border); border-radius:4px;
+  padding:8px; overflow-x:auto;
+}
+.diagram-shell svg{display:block; min-width:1320px; width:100%; height:auto}
+
+svg .lane-kicker{
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.13em; text-transform:uppercase;
+  fill:var(--ink-dim);
+}
+svg .title{ font-family:var(--font-body); font-size:15.5px; font-weight:700; fill:var(--ink); }
+svg .sub{ font-family:var(--font-body); font-size:12px; fill:var(--ink-dim); }
+svg .tag{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:.09em; }
+svg .pill-word{ font-family:var(--font-display); font-size:14px; fill:var(--pill-ink); }
+svg .pill-sub{ font-family:var(--font-mono); font-size:8.5px; letter-spacing:.06em; fill:var(--pill-ink); opacity:.72 }
+svg .callout{ font-family:var(--font-mono); font-size:10px; letter-spacing:.05em; fill:var(--gold-ink); font-weight:600 }
+svg .wirelabel{ font-family:var(--font-mono); font-size:9.5px; fill:var(--ink-dim); }
+
+.card{ fill:var(--surface); stroke:var(--border); stroke-width:1.3; }
+.card.ai{ fill:var(--gold-soft); stroke:var(--gold); stroke-width:1.6; }
+.card.infra{ fill:var(--slate-soft); stroke:var(--slate); stroke-width:1.4; }
+.card.ext{ fill:var(--bg); stroke:var(--slate); stroke-width:1.3; stroke-dasharray:4 3; }
+.card.ext.llm{ stroke:var(--gold); }
+
+.pill{ fill:var(--pill-bg); }
+
+.flow{ stroke:var(--line); stroke-width:2; fill:none; marker-end:url(#arrInk); }
+.bus{ stroke:var(--line-soft); stroke-width:1.4; fill:none; }
+.bustick{ stroke:var(--line-soft); stroke-width:1.4; fill:none; }
+.infrachain{ stroke:var(--slate); stroke-width:1.8; fill:none; marker-end:url(#arrSlate); opacity:.85 }
+.ext-wire{ stroke:var(--slate); stroke-width:1.4; stroke-dasharray:5 4; fill:none; marker-end:url(#arrSlate); opacity:.9 }
+.ext-wire.gold{ stroke:var(--gold); marker-end:url(#arrGold); }
+.pivot{ stroke:var(--gold); stroke-width:3.5; fill:none; marker-end:url(#arrGold); }
+.loopback{ stroke:var(--ink-dim); stroke-width:1.5; stroke-dasharray:2 4; fill:none; marker-end:url(#arrInk); opacity:.8 }
+
+.tag-ai rect{fill:var(--gold); } .tag-ai text{fill:var(--pill-ink); }
+.tag-infra rect{fill:var(--slate); } .tag-infra text{fill:var(--pill-ink); }
+
+footer.note{
+  margin-top:26px; font-size:13px; line-height:1.7; color:var(--ink-dim); max-width:72ch;
+}
+footer.note strong{color:var(--ink); font-weight:600}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="wrap">
+    <p class="eyebrow">Grandezza &middot; Backend Architecture</p>
+    <h1>How the two engines connect</h1>
+    <p class="dek">
+      One pipeline turns cold prospects into paying clients; a second builds their
+      site and keeps their marketing running afterward. Both share a single
+      platform spine and lean on the same handful of outside services.
+    </p>
+
+    <div class="legend">
+      <div class="legend-item"><span class="swatch sw-dot sw-gold-dot"></span>AI / LLM agent step</div>
+      <div class="legend-item"><span class="swatch sw-dot sw-slate-dot"></span>Shared platform infrastructure</div>
+      <div class="legend-item"><span class="swatch sw-dash"></span>Call to a third-party API</div>
+      <div class="legend-item"><span class="swatch sw-line"></span>The pivotal moment &mdash; lead becomes client</div>
+    </div>
+
+    <div class="diagram-shell">
+      <svg viewBox="0 0 1600 880" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Backend architecture flowchart">
+        <defs>
+          <marker id="arrInk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--line)"/>
+          </marker>
+          <marker id="arrGold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--gold)"/>
+          </marker>
+          <marker id="arrSlate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--slate)"/>
+          </marker>
+        </defs>
+
+        <!-- ================= ACTOR: PROSPECT ================= -->
+        <g>
+          <rect class="pill" x="24" y="24" width="150" height="44" rx="22"/>
+          <text class="pill-word" x="99" y="43" text-anchor="middle">Prospect</text>
+          <text class="pill-sub" x="99" y="57" text-anchor="middle">restaurant / small biz</text>
+        </g>
+        <path class="flow" d="M99,68 L99,100"/>
+        <text class="lane-kicker" x="220" y="88">Acquisition Engine &middot; finding + converting leads</text>
+
+        <!-- ================= ROW A ================= -->
+        <!-- A1 -->
+        <g>
+          <rect class="card" x="24" y="100" width="200" height="90" rx="3"/>
+          <text class="title" x="40" y="128">Business Data Sources</text>
+          <text class="sub" x="40" y="148">Google Places &middot; OSM exports</text>
+        </g>
+        <!-- A2 -->
+        <g>
+          <rect class="card" x="282" y="100" width="200" height="90" rx="3"/>
+          <text class="title" x="298" y="128">Prospect List + Scoring</text>
+          <text class="sub" x="298" y="148">enrich, dedupe, rank leads</text>
+        </g>
+        <!-- A3 (AI) -->
+        <g>
+          <rect class="card ai" x="540" y="100" width="200" height="90" rx="3"/>
+          <text class="title" x="556" y="128">Outreach AI Agent</text>
+          <text class="sub" x="556" y="148">drafts personalized email + letter</text>
+          <g class="tag-ai"><rect x="556" y="160" width="64" height="16" rx="8"/><text class="tag" x="588" y="171" text-anchor="middle" style="fill:var(--pill-ink)">AI AGENT</text></g>
+        </g>
+        <!-- A4 -->
+        <g>
+          <rect class="card" x="798" y="100" width="200" height="90" rx="3"/>
+          <text class="title" x="814" y="128">Send Queue</text>
+          <text class="sub" x="814" y="148">email + physical-mail jobs</text>
+        </g>
+        <!-- A5 -->
+        <g>
+          <rect class="card" x="1056" y="100" width="200" height="90" rx="3"/>
+          <text class="title" x="1072" y="128">Reply + Signal Tracker</text>
+          <text class="sub" x="1072" y="148">opens, replies, mail scans</text>
+        </g>
+
+        <path class="flow" d="M224,145 L282,145"/>
+        <path class="flow" d="M482,145 L540,145"/>
+        <path class="flow" d="M740,145 L798,145"/>
+        <path class="flow" d="M998,145 L1056,145"/>
+
+        <!-- ============ CHANNEL 1 (between Row A and Spine) ============ -->
+        <path class="bus" d="M24,215 L1256,215"/>
+        <path class="bustick" d="M124,190 L124,215"/>
+        <path class="bustick" d="M382,190 L382,215"/>
+        <path class="bustick" d="M640,190 L640,215"/>
+        <path class="bustick" d="M898,190 L898,215"/>
+        <path class="bustick" d="M1156,190 L1156,215"/>
+        <path class="bus" d="M214,215 L214,330"/>
+
+        <!-- re-engage loop (A5 -> A2) -->
+        <path class="loopback" d="M1156,190 L1156,245 L382,245 L382,190"/>
+        <text class="wirelabel" x="769" y="238" text-anchor="middle">re-engage &middot; score update</text>
+
+        <!-- pivot: deal closed (A5 -> Spine -> C1) -->
+        <path class="pivot" d="M1180,190 L1180,285 L154,285 L154,330"/>
+        <rect x="586" y="274" width="118" height="22" rx="11" fill="var(--gold)"/>
+        <text class="tag" x="645" y="289" text-anchor="middle" style="fill:var(--pill-ink)">DEAL CLOSED</text>
+
+        <!-- ================= SPINE ================= -->
+        <text class="lane-kicker" x="220" y="318">Platform Spine &middot; shared data + infra</text>
+
+        <g>
+          <rect class="card infra" x="24" y="330" width="260" height="90" rx="3"/>
+          <text class="title" x="40" y="358">API Gateway + Auth</text>
+          <text class="sub" x="40" y="378">internal REST edge</text>
+        </g>
+        <g>
+          <rect class="card infra" x="348" y="330" width="260" height="90" rx="3"/>
+          <text class="title" x="364" y="358">Postgres</text>
+          <text class="sub" x="364" y="378">clients &middot; leads &middot; campaigns &middot; sites</text>
+        </g>
+        <g>
+          <rect class="card infra" x="672" y="330" width="260" height="90" rx="3"/>
+          <text class="title" x="688" y="358">Redis</text>
+          <text class="sub" x="688" y="378">cache + job queue (BullMQ)</text>
+        </g>
+        <g>
+          <rect class="card infra" x="996" y="330" width="260" height="90" rx="3"/>
+          <text class="title" x="1012" y="358">Object Storage &mdash; S3</text>
+          <text class="sub" x="1012" y="378">assets &middot; site bundles &middot; letter PDFs</text>
+        </g>
+
+        <path class="infrachain" d="M284,375 L348,375"/>
+        <path class="infrachain" d="M608,375 L672,375"/>
+        <path class="infrachain" d="M932,375 L996,375"/>
+
+        <!-- ============ CHANNEL 2 (between Spine and Lane C) ============ -->
+        <path class="bus" d="M24,445 L1256,445"/>
+        <path class="bustick" d="M154,420 L154,445"/>
+        <path class="bustick" d="M478,420 L478,445"/>
+        <path class="bustick" d="M802,420 L802,445"/>
+        <path class="bustick" d="M1126,420 L1126,445"/>
+        <path class="bus" d="M194,445 L194,500"/>
+
+        <!-- ================= ACTOR: CLIENT ================= -->
+        <g>
+          <rect class="pill" x="24" y="430" width="140" height="40" rx="20"/>
+          <text class="pill-word" x="94" y="454" text-anchor="middle">Client</text>
+        </g>
+        <text class="lane-kicker" x="220" y="488">Client Delivery Engine &middot; site + ongoing marketing</text>
+
+        <!-- ================= LANE C : SUBROW 1 (launch) ================= -->
+        <g>
+          <rect class="card" x="24" y="500" width="340" height="90" rx="3"/>
+          <text class="title" x="40" y="528">Onboarding Portal</text>
+          <text class="sub" x="40" y="548">business info, branding, menu/services</text>
+        </g>
+        <g>
+          <rect class="card ai" x="470" y="500" width="340" height="90" rx="3"/>
+          <text class="title" x="486" y="528">Site Generation Agent</text>
+          <text class="sub" x="486" y="548">AI copy + layout assembly</text>
+          <g class="tag-ai"><rect x="486" y="560" width="64" height="16" rx="8"/><text class="tag" x="518" y="571" text-anchor="middle" style="fill:var(--pill-ink)">AI AGENT</text></g>
+        </g>
+        <g>
+          <rect class="card" x="916" y="500" width="340" height="90" rx="3"/>
+          <text class="title" x="932" y="528">Deploy Pipeline</text>
+          <text class="sub" x="932" y="548">build, publish, connect domain</text>
+        </g>
+
+        <path class="flow" d="M364,545 L470,545"/>
+        <path class="flow" d="M810,545 L916,545"/>
+
+        <!-- ============ CHANNEL 3 (between subrow 1 and 2) ============ -->
+        <path class="bus" d="M150,590 L150,680"/>
+        <path class="bus" d="M1086,590 L1086,635 L250,635 L250,680"/>
+
+        <!-- ================= LANE C : SUBROW 2 (ongoing) ================= -->
+        <g>
+          <rect class="card ai" x="24" y="680" width="340" height="90" rx="3"/>
+          <text class="title" x="40" y="708">Ongoing Marketing Agent</text>
+          <text class="sub" x="40" y="728">recurring social + email content</text>
+          <g class="tag-ai"><rect x="40" y="740" width="64" height="16" rx="8"/><text class="tag" x="72" y="751" text-anchor="middle" style="fill:var(--pill-ink)">AI AGENT</text></g>
+        </g>
+        <g>
+          <rect class="card" x="470" y="680" width="340" height="90" rx="3"/>
+          <text class="title" x="486" y="708">Analytics Collector</text>
+          <text class="sub" x="486" y="728">traffic, opens, reservations</text>
+        </g>
+        <g>
+          <rect class="card" x="916" y="680" width="340" height="90" rx="3"/>
+          <text class="title" x="932" y="708">Client Dashboard</text>
+          <text class="sub" x="932" y="728">performance + billing status</text>
+        </g>
+
+        <path class="flow" d="M364,725 L470,725"/>
+        <path class="flow" d="M810,725 L916,725"/>
+
+        <!-- loop back to CLIENT pill -->
+        <path class="loopback" d="M1086,770 L1086,820 L10,820 L10,452 L24,452"/>
+        <text class="wirelabel" x="480" y="813" text-anchor="middle">ongoing reporting loop</text>
+
+        <!-- ================= EXTERNAL RAIL ================= -->
+        <text class="lane-kicker" x="1300" y="88" style="font-size:11px">Third-Party Services</text>
+
+        <g>
+          <rect class="card ext" x="1300" y="100" width="276" height="60" rx="3"/>
+          <text class="title" x="1316" y="124" style="font-size:13.5px">Business Data API</text>
+          <text class="sub" x="1316" y="142">Google Places &middot; OSM</text>
+        </g>
+        <g>
+          <rect class="card ext llm" x="1300" y="250" width="276" height="90" rx="3"/>
+          <text class="title" x="1316" y="276" style="font-size:13.5px">LLM API &mdash; Claude</text>
+          <text class="sub" x="1316" y="296">reasoning for all three</text>
+          <text class="sub" x="1316" y="312">AI agents at left</text>
+        </g>
+        <g>
+          <rect class="card ext" x="1300" y="420" width="276" height="60" rx="3"/>
+          <text class="title" x="1316" y="444" style="font-size:13.5px">Email Delivery API</text>
+          <text class="sub" x="1316" y="462">Postmark / Resend</text>
+        </g>
+        <g>
+          <rect class="card ext" x="1300" y="510" width="276" height="60" rx="3"/>
+          <text class="title" x="1316" y="534" style="font-size:13.5px">Direct Mail API</text>
+          <text class="sub" x="1316" y="552">Lob / PostGrid</text>
+        </g>
+        <g>
+          <rect class="card ext" x="1300" y="600" width="276" height="60" rx="3"/>
+          <text class="title" x="1316" y="624" style="font-size:13.5px">Hosting / Deploy API</text>
+          <text class="sub" x="1316" y="642">Vercel / Cloudflare Pages</text>
+        </g>
+        <g>
+          <rect class="card ext" x="1300" y="690" width="276" height="60" rx="3"/>
+          <text class="title" x="1316" y="714" style="font-size:13.5px">Domain Registrar</text>
+          <text class="sub" x="1316" y="732">Cloudflare / Namecheap</text>
+        </g>
+        <g>
+          <rect class="card ext" x="1300" y="780" width="276" height="60" rx="3"/>
+          <text class="title" x="1316" y="804" style="font-size:13.5px">Payments &mdash; Stripe</text>
+          <text class="sub" x="1316" y="822">subscription billing</text>
+        </g>
+
+        <!-- ============ RAIL WIRES ============ -->
+        <path class="ext-wire" d="M124,190 L124,200 L1270,200 L1270,130 L1300,130"/>
+        <path class="ext-wire" d="M898,190 L898,210 L1276,210 L1276,450 L1300,450"/>
+        <path class="ext-wire" d="M958,190 L958,220 L1283,220 L1283,540 L1300,540"/>
+        <path class="ext-wire" d="M1300,495 L1290,495 L1290,225 L1156,225 L1156,190"/>
+        <text class="wirelabel" x="1224" y="238" text-anchor="middle">opens / replies / scans</text>
+        <path class="ext-wire gold" d="M640,590 L640,610 L1270,610 L1270,295 L1300,295"/>
+        <path class="ext-wire" d="M1030,590 L1030,630 L1300,630"/>
+        <path class="ext-wire" d="M1150,590 L1150,720 L1300,720"/>
+        <path class="ext-wire" d="M1030,770 L1030,800 L1300,800"/>
+      </svg>
+    </div>
+
+    <footer class="note">
+      <strong>Read order:</strong> Acquisition runs top-left to right &mdash; source, score, draft,
+      send, listen &mdash; until a reply becomes a booked deal. That single gold line is the
+      only thing that crosses engines: it provisions a client record through the API
+      Gateway and drops straight into Onboarding. From there Delivery launches the site
+      (top row) and hands off into ongoing marketing, analytics, and the client's own
+      dashboard (bottom row), which loops results back to the client. Both engines sit
+      on one Postgres/Redis/S3 spine and call the same handful of outside APIs on the right.
+    </footer>
+  </div>
+</div>
+</body>
+</html>

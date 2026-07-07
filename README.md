@@ -11,6 +11,8 @@ monogram in the hero, and scroll-scrubbed transitions between sections.
 |------|-------------|
 | `index.html` | The complete website — self-contained, no build step |
 | `logo/` | Brand marks as vector SVG (primary, inverse, horizontal, monogram) |
+| `docs/backend-architecture.md` | Backend system design: acquisition engine, platform spine, delivery engine |
+| `docs/backend-flowchart.html` | Visual flowchart of the backend architecture (open in a browser) |
 
 ## Running it
 
