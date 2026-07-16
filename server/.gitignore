@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dev.db
+dev.db-journal
+.env
+storage/generated-sites/*
+storage/letters/*
+!storage/generated-sites/.gitkeep
+!storage/letters/.gitkeep

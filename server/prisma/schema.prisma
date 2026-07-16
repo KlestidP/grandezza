@@ -1,0 +1,129 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// SQLite's Prisma connector does not support the `enum` schema construct at
+// all, so every status field below is a plain String with a default and a
+// comment listing the allowed values. Enforcement happens in the TS service
+// layer, not the DB. This becomes a real `enum` again if/when this schema
+// moves to Postgres.
+
+model Lead {
+  id           String   @id @default(cuid())
+  businessName String
+  industry     String
+  contactName  String?
+  email        String?
+  phone        String?
+  addressLine1 String?
+  city         String?
+  region       String?
+  postalCode   String?
+  country      String   @default("US")
+  source       String   @default("MANUAL") // SEED | MANUAL | WEBSITE
+  status       String   @default("NEW") // NEW | SCORED | CONTACTED | REPLIED | DEAL_CLOSED | DISQUALIFIED
+  score        Int?
+  scoreReason  String?
+  notes        String?
+  campaigns    Campaign[]
+  client       Client?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Campaign {
+  id        String            @id @default(cuid())
+  leadId    String
+  lead      Lead              @relation(fields: [leadId], references: [id])
+  status    String            @default("DRAFTING") // DRAFTING | QUEUED | SENT | REPLIED | DEAL_CLOSED | LOST
+  messages  OutreachMessage[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+model OutreachMessage {
+  id           String    @id @default(cuid())
+  campaignId   String
+  campaign     Campaign  @relation(fields: [campaignId], references: [id])
+  channel      String // EMAIL | LETTER
+  subject      String?
+  bodyText     String
+  bodyHtml     String?
+  status       String    @default("DRAFTED") // DRAFTED | QUEUED | SENT | FAILED | OPENED | REPLIED
+  providerName String?
+  providerId   String?
+  sentAt       DateTime?
+  openedAt     DateTime?
+  repliedAt    DateTime?
+  createdAt    DateTime  @default(now())
+}
+
+model Client {
+  id               String            @id @default(cuid())
+  leadId           String?           @unique
+  lead             Lead?             @relation(fields: [leadId], references: [id])
+  name             String
+  contactName      String?
+  email            String?
+  phone            String?
+  billingStatus    String            @default("TRIALING") // TRIALING | ACTIVE | PAST_DUE | CANCELED
+  onboardingStatus String            @default("PENDING") // PENDING | INTAKE_COMPLETE | SITE_GENERATED | LIVE
+  onboarding       OnboardingIntake?
+  sites            Site[]
+  marketingPosts   MarketingPost[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+model OnboardingIntake {
+  id                  String   @id @default(cuid())
+  clientId            String   @unique
+  client              Client   @relation(fields: [clientId], references: [id])
+  businessDescription String
+  servicesJson        String
+  brandColors         String?
+  rawFormJson         String
+  createdAt           DateTime @default(now())
+}
+
+model Site {
+  id           String    @id @default(cuid())
+  clientId     String
+  client       Client    @relation(fields: [clientId], references: [id])
+  slug         String    @unique
+  status       String    @default("DRAFT") // DRAFT | GENERATED | DEPLOYED
+  copyJson     String
+  htmlFilePath String?
+  deployedUrl  String?
+  generatedAt  DateTime?
+  deployedAt   DateTime?
+  createdAt    DateTime  @default(now())
+}
+
+model MarketingPost {
+  id        String   @id @default(cuid())
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id])
+  channel   String   @default("SOCIAL") // SOCIAL | EMAIL
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model JobLog {
+  id           String    @id @default(cuid())
+  jobType      String
+  refId        String
+  status       String    @default("PENDING") // PENDING | RUNNING | SUCCEEDED | FAILED
+  payloadJson  String?
+  resultJson   String?
+  errorMessage String?
+  attempts     Int       @default(0)
+  createdAt    DateTime  @default(now())
+  startedAt    DateTime?
+  finishedAt   DateTime?
+}
