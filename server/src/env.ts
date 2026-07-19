@@ -9,6 +9,8 @@ const schema = z.object({
   POSTMARK_API_KEY: z.string().optional(),
   POSTMARK_FROM_EMAIL: z.string().optional(),
   LOB_API_KEY: z.string().optional(),
+  STUDIO_NOTIFY_EMAIL: z.string().default("hallo@grandezza.design"),
+  ADMIN_API_KEY: z.string().optional(),
 });
 
 export const env = schema.parse(process.env);

@@ -1,5 +1,8 @@
 import { db } from "../../db.js";
+import { env } from "../../env.js";
 import { BadRequestError, NotFoundError } from "../../lib/errors.js";
+import { logger } from "../../lib/logger.js";
+import { emailProvider } from "../../providers/registry.js";
 import { scoreLead } from "./scoring.js";
 
 export interface CreateLeadInput {
@@ -21,7 +24,31 @@ export async function createLead(input: CreateLeadInput) {
   if (!input.businessName || !input.industry) {
     throw new BadRequestError("businessName and industry are required");
   }
-  return db.lead.create({ data: { ...input, source: input.source ?? "MANUAL" } });
+  const lead = await db.lead.create({ data: { ...input, source: input.source ?? "MANUAL" } });
+
+  // Only the public website form (WEBSITE) triggers a notification -- bulk
+  // imports/seeding (MANUAL/SEED) would otherwise spam an inbox. Fire and
+  // forget: a notification failure must never fail the lead creation itself.
+  if (lead.source === "WEBSITE") {
+    notifyNewWebsiteLead(lead).catch((err) =>
+      logger.error("Failed to send new-lead notification", { error: String(err) }),
+    );
+  }
+
+  return lead;
+}
+
+async function notifyNewWebsiteLead(lead: { businessName: string; contactName: string | null; email: string | null; notes: string | null }) {
+  await emailProvider.send({
+    to: env.STUDIO_NOTIFY_EMAIL,
+    subject: `New website inquiry: ${lead.businessName}`,
+    bodyText:
+      `New inquiry from the contact form:\n\n` +
+      `Name/Business: ${lead.businessName}\n` +
+      `Contact: ${lead.contactName ?? "—"}\n` +
+      `Email: ${lead.email ?? "—"}\n\n` +
+      `Message:\n${lead.notes ?? "—"}`,
+  });
 }
 
 export async function importLeads(inputs: CreateLeadInput[]) {

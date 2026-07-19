@@ -1,6 +1,7 @@
 import { createApp } from "./app.js";
 import { env } from "./env.js";
 import { logger } from "./lib/logger.js";
+import { logAdminKeyStatus } from "./lib/adminAuth.js";
 import { logProviderModes } from "./providers/registry.js";
 
 // Import order matters: job handlers register themselves as a side effect
@@ -15,4 +16,5 @@ const app = createApp();
 app.listen(env.PORT, () => {
   logger.info(`Grandezza server listening on http://localhost:${env.PORT}`);
   logProviderModes();
+  logAdminKeyStatus();
 });

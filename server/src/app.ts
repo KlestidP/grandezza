@@ -1,6 +1,7 @@
 import express from "express";
 import path from "node:path";
 import { NotFoundError, HttpError } from "./lib/errors.js";
+import { requireAdminKey } from "./lib/adminAuth.js";
 
 import { leadsRouter } from "./modules/leads/leads.routes.js";
 import { campaignsRouter } from "./modules/outreach/campaigns.routes.js";
@@ -9,6 +10,8 @@ import { clientsRouter } from "./modules/clients/clients.routes.js";
 import { sitesRouter } from "./modules/sites/sites.routes.js";
 import { jobsRouter } from "./modules/jobs/jobs.routes.js";
 import { dashboardRouter } from "./modules/dashboard/dashboard.routes.js";
+import { portalRouter } from "./modules/portal/portal.routes.js";
+import { analyticsRouter } from "./modules/analytics/analytics.routes.js";
 import { providerModes } from "./env.js";
 
 export function createApp() {
@@ -34,17 +37,33 @@ export function createApp() {
     express.static(path.resolve(process.cwd(), "storage", "generated-sites")),
   );
 
+  // The portal page is a single self-contained file that reads the token
+  // from its own URL client-side -- serve it for any /portal/:token path
+  // rather than relying on express.static, which would 404 on the token
+  // segment since no file with that name exists.
+  const portalHtmlPath = path.resolve(process.cwd(), "public", "portal.html");
+  app.get("/portal/:token", (_req, res) => {
+    res.sendFile(portalHtmlPath);
+  });
+
   app.get("/api/health", (_req, res) => {
     res.json({ ok: true, providers: providerModes });
   });
 
+  // Public: the website's own contact form, provider webhooks, the
+  // client-facing portal (protected by possession of its own token, not the
+  // admin key), and the analytics beacon.
   app.use("/api/leads", leadsRouter);
-  app.use("/api/campaigns", campaignsRouter);
   app.use("/api/webhooks", webhooksRouter);
-  app.use("/api/clients", clientsRouter);
-  app.use("/api/sites", sitesRouter);
-  app.use("/api/jobs", jobsRouter);
-  app.use("/api/dashboard", dashboardRouter);
+  app.use("/api/portal", portalRouter);
+  app.use("/api/analytics", analyticsRouter);
+
+  // Everything else is internal business data -- admin key required.
+  app.use("/api/campaigns", requireAdminKey, campaignsRouter);
+  app.use("/api/clients", requireAdminKey, clientsRouter);
+  app.use("/api/sites", requireAdminKey, sitesRouter);
+  app.use("/api/jobs", requireAdminKey, jobsRouter);
+  app.use("/api/dashboard", requireAdminKey, dashboardRouter);
 
   app.use((_req, _res, next) => next(new NotFoundError("Route")));
 

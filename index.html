@@ -106,6 +106,7 @@ body.entered .hero-foot{animation:rise 1.4s 1.6s cubic-bezier(.2,.7,.2,1) forwar
 .section-head{display:flex;align-items:baseline;gap:26px;padding:0 5vw;margin-bottom:64px}
 .section-head .num{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:2px}
 .section-head h3{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,48px);letter-spacing:.06em}
+.section-head .intro{margin-left:auto;max-width:400px;text-align:right;font-size:14.5px;line-height:1.7;color:rgba(246,241,232,.58)}
 .services{padding:16vh 0}
 .service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(176,141,87,.25);margin:0 5vw}
 .service{background:var(--charcoal);padding:52px 40px;transition:background .4s}
@@ -217,6 +218,7 @@ footer a:hover{color:var(--gold-light);border-color:var(--gold-light)}
 @media (max-width:720px){
   .nav-links a{display:none}
   .section-head{flex-direction:column;gap:8px}
+  .section-head .intro{margin-left:0;max-width:none;text-align:left}
   .hero-caption{top:66%}
   .hero-word{font-size:clamp(26px,8vw,44px)}
   .hero-word.l{top:26%}
@@ -276,6 +278,8 @@ footer a:hover{color:var(--gold-light);border-color:var(--gold-light)}
   <div class="nav-links">
     <a href="#leistungen" data-de="Leistungen" data-en="Services">Leistungen</a>
     <a href="#arbeiten" data-de="Arbeiten" data-en="Work">Arbeiten</a>
+    <a href="#preise" data-de="Preise" data-en="Pricing">Preise</a>
+    <a href="#faq" data-de="FAQ" data-en="FAQ">FAQ</a>
     <a href="#kontakt" data-de="Kontakt" data-en="Contact">Kontakt</a>
     <button id="langToggle" aria-label="Sprache wechseln / switch language">EN</button>
   </div>
@@ -334,6 +338,7 @@ footer a:hover{color:var(--gold-light);border-color:var(--gold-light)}
   <div class="section-head reveal">
     <span class="num">( 01 )</span>
     <h3 data-de="Leistungen" data-en="Services">Leistungen</h3>
+    <p class="intro" data-de="Website, Markenauftritt und Kampagne aus einer Hand — ohne Reibungsverluste zwischen den Gewerken." data-en="Website, brand identity and campaign from one team — nothing gets lost between the pieces.">Website, Markenauftritt und Kampagne aus einer Hand — ohne Reibungsverluste zwischen den Gewerken.</p>
   </div>
   <div class="orbit-stage reveal">
     <div class="orbit-ring" aria-hidden="true"></div>
@@ -359,32 +364,110 @@ footer a:hover{color:var(--gold-light);border-color:var(--gold-light)}
   <div class="section-head reveal" style="padding-top:12vh">
     <span class="num">( 02 )</span>
     <h3 data-de="Ausgewählte Arbeiten" data-en="Selected work">Ausgewählte Arbeiten</h3>
+    <p class="intro" data-de="Handwerk statt Vorlage: jede Website und jede Marke wird neu für den jeweiligen Auftritt gedacht." data-en="Craft, not templates: every website and every brand is rethought for the business behind it.">Handwerk statt Vorlage: jede Website und jede Marke wird neu für den jeweiligen Auftritt gedacht.</p>
   </div>
   <div class="float-item reveal" data-depth="-0.08" style="left:6vw;top:28%;width:min(34vw,420px);aspect-ratio:4/3">
     <img src="assets/webdesign.jpg" alt="Webdesign Projekt">
-    <span class="cap" data-de="Webdesign — bald" data-en="Web design — soon">Webdesign — bald</span>
+    <span class="cap" data-de="Webdesign" data-en="Web design">Webdesign</span>
   </div>
   <div class="float-item reveal" data-depth="0.1" style="right:8vw;top:22%;width:min(22vw,280px);aspect-ratio:4/3">
     <img src="assets/branding.jpg" alt="Branding Projekt">
-    <span class="cap" data-de="Branding — bald" data-en="Branding — soon">Branding — bald</span>
+    <span class="cap" data-de="Branding" data-en="Branding">Branding</span>
   </div>
   <div class="float-item reveal" data-depth="0.05" style="left:14vw;top:62%;width:min(20vw,250px);aspect-ratio:4/3">
     <img src="assets/marketing.jpg" alt="Marketing Projekt">
-    <span class="cap" data-de="Kampagne — bald" data-en="Campaign — soon">Kampagne — bald</span>
+    <span class="cap" data-de="Kampagne" data-en="Campaign">Kampagne</span>
   </div>
   <div class="float-item reveal tile" data-depth="-0.12" style="left:48%;top:52%;width:min(16vw,200px);aspect-ratio:1">
     <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="1.5"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="3"/></g></svg>
   </div>
   <div class="float-item reveal" data-depth="0.14" style="right:16vw;top:66%;width:min(26vw,320px);aspect-ratio:4/3">
     <img src="assets/branding.jpg" alt="Branding Detail">
-    <span class="cap" data-de="Identität — bald" data-en="Identity — soon">Identität — bald</span>
+    <span class="cap" data-de="Identität" data-en="Identity">Identität</span>
   </div>
+</section>
+
+<section class="pricing" id="preise">
+  <div class="section-head reveal">
+    <span class="num">( 03 )</span>
+    <h3 data-de="Preise" data-en="Pricing">Preise</h3>
+    <p class="intro" data-de="Zwei Wege — je nachdem, ob es bei der Website bleiben oder danach weitergehen soll." data-en="Two paths — depending on whether it stops at the website or keeps going from there.">Zwei Wege — je nachdem, ob es bei der Website bleiben oder danach weitergehen soll.</p>
+  </div>
+  <div class="pricing-grid reveal">
+    <div class="plan">
+      <span class="g">( Start )</span>
+      <h4 data-de="Website" data-en="Website">Website</h4>
+      <ul>
+        <li data-de="Website aus Ihren eigenen Angaben erstellt" data-en="A site built from your own business details">Website aus Ihren eigenen Angaben erstellt</li>
+        <li data-de="Hosting und Domain-Anbindung inklusive" data-en="Hosting and domain connection included">Hosting und Domain-Anbindung inklusive</li>
+        <li data-de="Einmalig — kein Abo nötig" data-en="One-time — no subscription required">Einmalig — kein Abo nötig</li>
+      </ul>
+      <a class="plan-cta" href="#kontakt" data-de="Angebot anfragen" data-en="Request a quote">Angebot anfragen</a>
+    </div>
+    <div class="plan">
+      <span class="g">( Laufend )</span>
+      <h4 data-de="Website + Marketing" data-en="Website + Marketing">Website + Marketing</h4>
+      <ul>
+        <li data-de="Alles aus „Website“" data-en="Everything in Website">Alles aus „Website“</li>
+        <li data-de="Laufende Social- &amp; E-Mail-Inhalte" data-en="Recurring social &amp; email content">Laufende Social- &amp; E-Mail-Inhalte</li>
+        <li data-de="Einfaches Dashboard für Ergebnisse" data-en="A simple dashboard for results">Einfaches Dashboard für Ergebnisse</li>
+      </ul>
+      <a class="plan-cta" href="#kontakt" data-de="Angebot anfragen" data-en="Request a quote">Angebot anfragen</a>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="faq-head reveal">
+    <span data-de="( Fragen )" data-en="( Questions )">( Fragen )</span>
+    <h3 data-de="Häufige Fragen" data-en="Frequently asked">Häufige Fragen</h3>
+  </div>
+  <details class="faq-item reveal">
+    <summary data-de="Wie lange dauert es, bis meine Website live ist?" data-en="How long until my site is live?">Wie lange dauert es, bis meine Website live ist?</summary>
+    <p data-de="Nach Ihren Angaben entwirft unser System einen ersten Entwurf meist innerhalb weniger Tage; danach schauen wir gemeinsam drauf, bevor es live geht." data-en="Once we have your business details, a first draft is usually ready within days; we review it together before it goes live.">Nach Ihren Angaben entwirft unser System einen ersten Entwurf meist innerhalb weniger Tage; danach schauen wir gemeinsam drauf, bevor es live geht.</p>
+  </details>
+  <details class="faq-item reveal">
+    <summary data-de="Muss ich selbst Texte schreiben?" data-en="Do I need to write anything myself?">Muss ich selbst Texte schreiben?</summary>
+    <p data-de="Nein — Sie beantworten ein paar Fragen zu Ihrem Betrieb, den Rest formulieren wir." data-en="No — you answer a few questions about your business, we write the rest.">Nein — Sie beantworten ein paar Fragen zu Ihrem Betrieb, den Rest formulieren wir.</p>
+  </details>
+  <details class="faq-item reveal">
+    <summary data-de="Was passiert nach dem Livegang?" data-en="What happens after launch?">Was passiert nach dem Livegang?</summary>
+    <p data-de="Mit dem Marketing-Paket geht es weiter: regelmäßige Social- und E-Mail-Inhalte, ohne dass Sie sich darum kümmern müssen." data-en="With the marketing plan, it keeps going: regular social and email content, without you having to manage it.">Mit dem Marketing-Paket geht es weiter: regelmäßige Social- und E-Mail-Inhalte, ohne dass Sie sich darum kümmern müssen.</p>
+  </details>
+  <details class="faq-item reveal">
+    <summary data-de="Kann ich die Website später ändern lassen?" data-en="Can I make changes later?">Kann ich die Website später ändern lassen?</summary>
+    <p data-de="Ja — melden Sie sich einfach bei uns, wir übernehmen die Anpassung für Sie." data-en="Yes — just reach out and we'll make the update for you.">Ja — melden Sie sich einfach bei uns, wir übernehmen die Anpassung für Sie.</p>
+  </details>
+  <details class="faq-item reveal">
+    <summary data-de="Ich habe schon eine Website — was jetzt?" data-en="I already have a website — what now?">Ich habe schon eine Website — was jetzt?</summary>
+    <p data-de="Kein Problem — wir schauen uns den aktuellen Auftritt an und sagen ehrlich, ob ein Wechsel sich lohnt." data-en="No problem — we'll look at what you have now and give you an honest read on whether switching makes sense.">Kein Problem — wir schauen uns den aktuellen Auftritt an und sagen ehrlich, ob ein Wechsel sich lohnt.</p>
+  </details>
 </section>
 
 <section class="contact" id="kontakt">
   <h3 class="reveal" data-de="Lassen Sie uns reden." data-en="Let&amp;rsquo;s talk.">Lassen Sie uns reden.</h3>
   <p class="reveal" data-de="Ein neues Projekt, ein Relaunch oder erst einmal eine Idee? Wir freuen uns auf Ihre Nachricht – Kaffee gibt es in Bremen dazu." data-en="A new project, a relaunch, or just the first spark of an idea? We&amp;rsquo;d love to hear from you — the coffee in Bremen is on us.">Ein neues Projekt, ein Relaunch oder erst einmal eine Idee? Wir freuen uns auf Ihre Nachricht – Kaffee gibt es in Bremen dazu.</p>
-  <a class="cta reveal" href="mailto:hallo@grandezza.design" data-de="Projekt anfragen" data-en="Start a project">Projekt anfragen</a>
+  <form class="lead-form reveal" id="leadForm">
+    <div class="field">
+      <label for="lf-name" data-de="Name" data-en="Name">Name</label>
+      <input id="lf-name" name="name" type="text" required autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="lf-business" data-de="Unternehmen" data-en="Business">Unternehmen</label>
+      <input id="lf-business" name="business" type="text" required autocomplete="organization">
+    </div>
+    <div class="field">
+      <label for="lf-email" data-de="E-Mail" data-en="Email">E-Mail</label>
+      <input id="lf-email" name="email" type="email" required autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="lf-message" data-de="Nachricht" data-en="Message">Nachricht</label>
+      <textarea id="lf-message" name="message" required></textarea>
+    </div>
+    <button type="submit" class="cta" id="lf-submit" data-de="Nachricht senden" data-en="Send message">Nachricht senden</button>
+    <p class="form-note" id="lf-note"></p>
+  </form>
+  <p class="reveal" style="margin-top:22px;font-size:13px;color:#8a8377" data-de="oder direkt per E-Mail: <a href='mailto:hallo@grandezza.design' style='color:#5c554b'>hallo@grandezza.design</a>" data-en="or straight by email: <a href='mailto:hallo@grandezza.design' style='color:#5c554b'>hallo@grandezza.design</a>">oder direkt per E-Mail: <a href="mailto:hallo@grandezza.design" style="color:#5c554b">hallo@grandezza.design</a></p>
 </section>
 
 <footer>
@@ -392,7 +475,7 @@ footer a:hover{color:var(--gold-light);border-color:var(--gold-light)}
     <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="4"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="7"/></g></svg>
     <span>GRANDEZZA DESIGN · BREMEN</span>
   </div>
-  <span>© 2026 · <a href="impressum.html" data-de="Impressum" data-en="Legal notice">Impressum</a> · <a href="datenschutz.html" data-de="Datenschutz" data-en="Privacy">Datenschutz</a></span>
+  <span data-de="© 2026 Grandezza Design. Alle Rechte vorbehalten. · <a href='impressum.html'>Impressum</a> · <a href='datenschutz.html'>Datenschutz</a>" data-en="© 2026 Grandezza Design. All rights reserved. · <a href='impressum.html'>Legal notice</a> · <a href='datenschutz.html'>Privacy</a>">© 2026 Grandezza Design. Alle Rechte vorbehalten. · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></span>
 </footer>
 
 <script>
@@ -536,6 +619,66 @@ function startHero(){
 document.querySelectorAll('button.lang').forEach(function(b){
   b.addEventListener('click',function(){enter(b.dataset.lang,false)});
 });
+
+// Grandezza API base -- points at the local backend during development.
+// Update this once the backend has a real production URL.
+var API_BASE=(location.hostname==='localhost'||location.hostname==='127.0.0.1')
+  ?'http://localhost:3000':'https://api.grandezza.design';
+
+// Cookieless page-view beacon -- no visitor id, no cookie, just a path and
+// referrer, fired once per load. Failing silently is intentional: a
+// blocked or offline beacon must never affect the page itself.
+fetch(API_BASE+'/api/analytics/pageview',{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({path:location.pathname,referrer:document.referrer||null})
+}).catch(function(){});
+
+var leadForm=document.getElementById('leadForm');
+if(leadForm){
+  var lfNote=document.getElementById('lf-note');
+  var lfSubmit=document.getElementById('lf-submit');
+  var lfNoteText={
+    ok:{de:'Danke! Wir melden uns in Kürze.',en:'Thanks — we\'ll be in touch shortly.'},
+    err:{de:'Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt.',en:'Something went wrong. Please try again, or email us directly.'},
+    sending:{de:'Wird gesendet …',en:'Sending …'}
+  };
+  function curLang(){return document.documentElement.lang==='en'?'en':'de'}
+
+  leadForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var l=curLang();
+    var fd=new FormData(leadForm);
+    lfSubmit.disabled=true;
+    lfNote.className='form-note';
+    lfNote.textContent=lfNoteText.sending[l];
+
+    fetch(API_BASE+'/api/leads',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        businessName:fd.get('business'),
+        contactName:fd.get('name'),
+        email:fd.get('email'),
+        notes:fd.get('message'),
+        industry:'general inquiry',
+        source:'WEBSITE'
+      })
+    }).then(function(res){
+      if(!res.ok)throw new Error('request failed');
+      return res.json();
+    }).then(function(){
+      lfNote.className='form-note ok';
+      lfNote.textContent=lfNoteText.ok[l];
+      leadForm.reset();
+    }).catch(function(){
+      lfNote.className='form-note err';
+      lfNote.textContent=lfNoteText.err[l];
+    }).finally(function(){
+      lfSubmit.disabled=false;
+    });
+  });
+}
 
 toggle.addEventListener('click',function(){
   setLang(toggle.dataset.current==='de'?'en':'de');

@@ -73,6 +73,7 @@ model Client {
   phone            String?
   billingStatus    String            @default("TRIALING") // TRIALING | ACTIVE | PAST_DUE | CANCELED
   onboardingStatus String            @default("PENDING") // PENDING | INTAKE_COMPLETE | SITE_GENERATED | LIVE
+  dashboardToken   String            @unique @default(cuid())
   onboarding       OnboardingIntake?
   sites            Site[]
   marketingPosts   MarketingPost[]
@@ -126,4 +127,14 @@ model JobLog {
   createdAt    DateTime  @default(now())
   startedAt    DateTime?
   finishedAt   DateTime?
+}
+
+// Minimal cookieless analytics: one row per page view, no visitor
+// identifier stored (no cookie, no fingerprint) -- so this needs no
+// consent banner. Just enough to answer "which pages get visited."
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  referrer  String?
+  createdAt DateTime @default(now())
 }
