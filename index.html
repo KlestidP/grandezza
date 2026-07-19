@@ -131,6 +131,8 @@ body.entered .hero-foot{animation:rise 1.4s 1.6s cubic-bezier(.2,.7,.2,1) forwar
 footer{padding:44px 5vw;display:flex;align-items:center;justify-content:space-between;font-size:13px;letter-spacing:2px;color:rgba(246,241,232,.5)}
 footer .fm{display:flex;align-items:center;gap:12px}
 footer svg{width:26px;height:26px}
+footer a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .3s,color .3s}
+footer a:hover{color:var(--gold-light);border-color:var(--gold-light)}
 
 .reveal{opacity:0;transform:translateY(46px);will-change:opacity,transform}
 
@@ -390,7 +392,7 @@ footer svg{width:26px;height:26px}
     <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="4"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="7"/></g></svg>
     <span>GRANDEZZA DESIGN · BREMEN</span>
   </div>
-  <span data-de="© 2026 · Impressum · Datenschutz" data-en="© 2026 · Legal notice · Privacy">© 2026 · Impressum · Datenschutz</span>
+  <span>© 2026 · <a href="impressum.html" data-de="Impressum" data-en="Legal notice">Impressum</a> · <a href="datenschutz.html" data-de="Datenschutz" data-en="Privacy">Datenschutz</a></span>
 </footer>
 
 <script>

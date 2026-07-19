@@ -13,6 +13,9 @@ monogram in the hero, and scroll-scrubbed transitions between sections.
 | `logo/` | Brand marks as vector SVG (primary, inverse, horizontal, monogram) |
 | `docs/backend-architecture.md` | Backend system design: acquisition engine, platform spine, delivery engine |
 | `docs/backend-flowchart.html` | Visual flowchart of the backend architecture (open in a browser) |
+| `docs/gmbh-formation-notes.md` | Personal reference notes on registering a GmbH in Bremen (not legal advice) |
+| `server/` | Backend API implementing the architecture above (see `server/README.md`) |
+| `impressum.html`, `datenschutz.html` | Legal notice / privacy policy templates — placeholders need real business details before launch |
 
 ## Running it
 
@@ -56,5 +59,6 @@ serves as-is.
 
 ---
 
-> Note for a live German launch: an *Impressum* and *Datenschutzerklärung* are
-> legally required before publishing. The footer links are placeholders.
+> Note for a live German launch: `impressum.html` and `datenschutz.html` exist and
+> are linked from the footer, but every `[bracketed placeholder]` inside them needs
+> real business details filled in — and a quick legal review — before publishing.
