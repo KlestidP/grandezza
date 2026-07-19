@@ -73,7 +73,7 @@ nav.scrolled{background:rgba(28,25,23,.92);backdrop-filter:blur(12px);padding:14
 
 .hero{position:sticky;top:0;min-height:100vh;overflow:hidden;background:#141110}
 #progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--gold);z-index:150;transition:width .1s linear}
-.statement,.services,.work,.contact,footer{position:relative;z-index:2}
+.statement,.services,.work,.pricing,.faq,.contact,footer{position:relative;z-index:2}
 .services,.work,footer{background:var(--charcoal)}
 #particles{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
 #particles2{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:2;pointer-events:none}
@@ -576,6 +576,7 @@ function startHero(){
     ctx.clearRect(0,0,W,H);
     ctx2.clearRect(0,0,W,H);
     var P=window.__scrollP||0;
+    if(wordL){var wOp=Math.max(0,1-P*1.3);wordL.style.opacity=wOp;wordR.style.opacity=wOp}
     if(P>0.985){if(typeof runScrub==='function')runScrub();return}
     var fade=1-P*0.85;
     if(mtx>-9000){
@@ -692,7 +693,9 @@ var nav=document.getElementById('nav');
 var progress=document.getElementById('progress');
 var caption=document.querySelector('.hero-caption');
 var heroFoot=document.querySelector('.hero-foot');
-[caption,heroFoot].forEach(function(el){
+var heroWordL=document.querySelector('.hero-word.l');
+var heroWordR=document.querySelector('.hero-word.r');
+[caption,heroFoot,heroWordL,heroWordR].forEach(function(el){
   el.addEventListener('animationend',function(){el.style.opacity=1;el.style.animation='none'});
 });
 var reveals=[].slice.call(document.querySelectorAll('.reveal'));
