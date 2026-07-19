@@ -52,9 +52,18 @@ is set in `.env`. Nothing else in the app branches on mock-vs-real.
 | LLM (all 3 AI agents) | `ANTHROPIC_API_KEY` | Deterministic templated text | Calls Claude, validates JSON response |
 | Email send | `POSTMARK_API_KEY` (+ `POSTMARK_FROM_EMAIL`) | Logs + fake id | Calls Postmark's REST API |
 | Direct mail | `LOB_API_KEY` | Writes a `.txt` stand-in to `storage/letters/` | Calls Lob's REST API |
-| Deploy | — | Confirms the generated file on disk, serves it at `/sites/:slug.html` | *(not implemented — see below)* |
+| Deploy | `VERCEL_TOKEN` (+ `VERCEL_PROJECT_ID`) | Confirms the generated file on disk, serves it at `/sites/:slug.html` | Publishes via Vercel's Deployments API |
+| Billing | `STRIPE_SECRET_KEY` (+ `STRIPE_PRICE_ID`) | `POST /api/clients/:id/billing/checkout` returns an error explaining billing isn't configured | Creates a real Stripe Checkout session |
 
 Drop a key into `.env` and restart; no code changes needed.
+
+**Caveat on Vercel and Stripe specifically:** both were written against each
+provider's publicly documented REST API shape, but neither has been
+exercised against a real account (no test credentials were available while
+building this) — the same rigor applied everywhere else (mock mode fully
+tested, `verify.ts` green) does not extend to these two real-provider code
+paths. Test them against a real sandbox/test key before trusting them with
+real client sites or real money.
 
 ## Admin auth
 
@@ -95,19 +104,60 @@ no visitor id** — the site's own beacon script calls it once per page load.
 Because nothing identifying is stored, this doesn't require a cookie-consent
 banner. Aggregate counts show up in `GET /api/dashboard` under `pageViews`.
 
+## Rate limiting
+
+The public endpoints reachable by anyone on the internet are rate-limited
+per IP (in-memory, fixed-window — see `src/lib/rateLimit.ts`):
+
+| Endpoint | Limit |
+|---|---|
+| `POST /api/leads` (contact form) | 10 / 15 min |
+| `POST /api/webhooks/*` | 100 / min |
+| `GET /api/portal/:token` | 30 / min |
+| `POST /api/analytics/pageview` | 60 / min |
+
+This is single-instance only (an in-memory Map, same caveat as the job
+queue) — fine for one server, not for multiple instances behind a load
+balancer without moving it to something shared like Redis.
+
+## Webhook signature verification
+
+Once you set the matching secret, inbound webhooks are verified before
+being trusted — otherwise (mock mode, or before you've configured it) they're
+accepted as-is, same as before:
+
+| Provider | Env var(s) | Scheme |
+|---|---|---|
+| Lob | `LOB_WEBHOOK_SECRET` | HMAC-SHA256 over `timestamp.body`, `Lob-Signature` header |
+| Postmark | `POSTMARK_WEBHOOK_USERNAME` + `_PASSWORD` | HTTP Basic Auth on the webhook URL |
+| Stripe | `STRIPE_WEBHOOK_SECRET` | HMAC-SHA256 over `timestamp.body`, `Stripe-Signature` header |
+
+The signature-checking logic itself (`src/lib/webhookVerify.ts`) was tested
+directly with hand-constructed valid/tampered signatures — correctly
+accepts valid ones and rejects tampered, wrong-secret, and missing ones.
+What's *not* tested is a real inbound webhook from each provider, since
+that needs a live account.
+
+## Billing (Stripe)
+
+`POST /api/clients/:id/billing/checkout` (admin) creates a Stripe Checkout
+session for a client's subscription and returns the URL. `POST
+/api/webhooks/stripe` handles `checkout.session.completed` and
+`customer.subscription.*` events, updating `Client.billingStatus`
+accordingly. Returns an explanatory error if `STRIPE_SECRET_KEY` /
+`STRIPE_PRICE_ID` aren't set yet.
+
 ## What's intentionally not built yet
 
-This is an MVP scoped to run fully offline. Not implemented:
+This is scoped to be fully testable offline, with real integrations coded
+but not all runtime-verified (see caveats above). Still not implemented:
 
 - Live lead sourcing (Google Places/OSM) — leads are seeded or imported via `POST /api/leads` / `/import`.
-- A real deploy provider (Vercel/Cloudflare Pages) and domain connection.
-- Real Stripe billing — `Client.billingStatus` exists as a field with no Stripe calls.
 - Real PDF letter generation — mock mail writes plain text.
-- Real provider webhook signature verification — `/api/webhooks/*` trusts
-  the payload as-is; fine for mock mode, worth revisiting before wiring real
-  Postmark/Lob webhooks.
 - CI/CD and a test framework (`scripts/verify.ts` is a smoke script, not a
   test suite).
+- Multi-instance support for the rate limiter and job queue (both are
+  in-process/in-memory — fine for one server).
 
 See [`DEPLOYMENT.md`](DEPLOYMENT.md) for what's needed to actually host this.
 
@@ -130,6 +180,8 @@ GET  /api/dashboard                            aggregate view of the whole pipel
 GET  /api/portal/:token                          a client's own scoped view (public, token-gated)
 GET  /portal/:token                              the client dashboard page itself (public, token-gated)
 POST /api/analytics/pageview                     cookieless page-view beacon (public)
+POST /api/clients/:id/billing/checkout           creates a Stripe Checkout session                     [admin]
+POST /api/webhooks/stripe                        Stripe billing events (checkout completed, sub updated/cancelled)
 ```
 
 ## Job visibility

@@ -71,9 +71,11 @@ model Client {
   contactName      String?
   email            String?
   phone            String?
-  billingStatus    String            @default("TRIALING") // TRIALING | ACTIVE | PAST_DUE | CANCELED
-  onboardingStatus String            @default("PENDING") // PENDING | INTAKE_COMPLETE | SITE_GENERATED | LIVE
-  dashboardToken   String            @unique @default(cuid())
+  billingStatus       String            @default("TRIALING") // TRIALING | ACTIVE | PAST_DUE | CANCELED
+  onboardingStatus    String            @default("PENDING") // PENDING | INTAKE_COMPLETE | SITE_GENERATED | LIVE
+  dashboardToken      String            @unique @default(cuid())
+  stripeCustomerId     String?          @unique
+  stripeSubscriptionId String?
   onboarding       OnboardingIntake?
   sites            Site[]
   marketingPosts   MarketingPost[]

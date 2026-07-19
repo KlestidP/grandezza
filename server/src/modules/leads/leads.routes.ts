@@ -1,14 +1,18 @@
 import { Router } from "express";
 import { asyncHandler } from "../../lib/asyncHandler.js";
 import { requireAdminKey } from "../../lib/adminAuth.js";
+import { rateLimit } from "../../lib/rateLimit.js";
 import { draftOutreachForLead } from "../outreach/outreach.service.js";
 import * as leadsService from "./leads.service.js";
 
 export const leadsRouter = Router();
 
 // Public: this is the endpoint the website's own contact form posts to.
+// Rate-limited on its own -- the admin-protected routes below don't need
+// this, and shouldn't be throttled the same way real business use would be.
 leadsRouter.post(
   "/",
+  rateLimit({ windowMs: 15 * 60 * 1000, max: 10, message: "Too many submissions. Please try again later." }),
   asyncHandler(async (req, res) => {
     const lead = await leadsService.createLead(req.body);
     res.status(201).json(lead);

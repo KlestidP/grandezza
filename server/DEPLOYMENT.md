@@ -45,8 +45,16 @@ free/starter tier is a reasonable default.
      it secret, you'll need it yourself to use those endpoints
    - `STUDIO_NOTIFY_EMAIL` — where new website inquiries should be emailed
    - Only once you have them: `ANTHROPIC_API_KEY`, `POSTMARK_API_KEY` +
-     `POSTMARK_FROM_EMAIL`, `LOB_API_KEY` — each flips one provider from
-     mock to real, independently, no code changes needed
+     `POSTMARK_FROM_EMAIL`, `LOB_API_KEY`, `VERCEL_TOKEN` + `VERCEL_PROJECT_ID`,
+     `STRIPE_SECRET_KEY` + `STRIPE_PRICE_ID` — each flips one provider from
+     mock to real, independently, no code changes needed. The Vercel and
+     Stripe integrations were written against each provider's documented API
+     but not tested against a real account — verify them yourself before
+     relying on them (see `server/README.md`).
+   - Once you set the matching provider key above, also set its webhook
+     verification secret: `LOB_WEBHOOK_SECRET`, `POSTMARK_WEBHOOK_USERNAME` +
+     `_PASSWORD`, `STRIPE_WEBHOOK_SECRET` — inbound webhooks are trusted
+     as-is until you do.
 5. **Deploy.** Render builds the Dockerfile and runs it; the container's
    `CMD` applies migrations and starts the server automatically.
 6. **Update the frontend.** In `index.html`, change the `API_BASE` fallback
@@ -70,8 +78,10 @@ placeholders.
 
 None of the above is legally launch-ready by itself. Also needed:
 
-- Fill in every `[bracketed placeholder]` in `impressum.html` and
-  `datenschutz.html` with your real business details.
+- Fill in every `[bracketed placeholder]` in `impressum.html`,
+  `datenschutz.html`, and `agb.html` with your real business details, and
+  have `agb.html` (terms of service) reviewed by a lawyer — it decides real
+  things like liability limits and cancellation terms.
 - Point `STUDIO_NOTIFY_EMAIL` and the Postmark "from" address at real,
   monitored inboxes.
 - Decide on real pricing figures if you want to show them (the pricing
