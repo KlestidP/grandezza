@@ -20,13 +20,19 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--ivory);color:var(--charcoal);font-family:var(--sans);font-weight:300;line-height:1.75}
-header{padding:5vh 6vw 3vh;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(28,25,23,.12)}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--charcoal)}
+
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--charcoal);padding:18px 5vw;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ivory)}
 .brand svg{width:30px;height:30px}
 .brand span{font-family:var(--serif);font-size:15px;letter-spacing:4px}
-header a.back{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:2px}
-main{max-width:700px;margin:0 auto;padding:8vh 6vw 14vh}
-h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,5vw,46px);margin-bottom:8vh;letter-spacing:.02em}
+.header-right{display:flex;align-items:center;gap:22px}
+header a.back{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ivory);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:2px;opacity:.85;transition:opacity .3s}
+header a.back:hover{opacity:1}
+#langToggle{background:none;border:1px solid rgba(176,141,87,.5);color:var(--gold-light);font-family:var(--sans);font-size:12px;letter-spacing:3px;padding:6px 14px;cursor:pointer;transition:background .3s,color .3s}
+#langToggle:hover{background:var(--gold);color:var(--charcoal)}
+
+main{max-width:700px;margin:0 auto;padding:16vh 6vw 12vh}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,5vw,46px);margin-bottom:8vh;letter-spacing:.02em;text-wrap:balance}
 .note{border:1px dashed rgba(176,141,87,.6);background:rgba(176,141,87,.06);padding:20px 22px;font-size:13.5px;color:#5c554b;margin-bottom:8vh}
 .note strong{color:var(--charcoal)}
 section{margin-bottom:6vh}
@@ -34,7 +40,15 @@ h2{font-family:var(--serif);font-weight:400;font-size:20px;margin-bottom:16px;le
 p{font-size:15px;color:#3d3830;margin-bottom:10px}
 .ph{color:#a3483a;font-style:italic}
 a{color:var(--charcoal)}
-footer{padding:5vh 6vw;text-align:center;font-size:12px;letter-spacing:2px;color:#8a8377}
+
+footer{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--charcoal);border-top:1px solid rgba(176,141,87,.3);padding:10px 5vw;text-align:center;font-size:11px;letter-spacing:2px;color:rgba(246,241,232,.55)}
+
+@media (max-width:640px){
+  header{padding:14px 5vw}
+  .brand span{display:none}
+  .header-right{gap:14px}
+  main{padding-top:14vh}
+}
 </style>
 </head>
 <body>
@@ -44,84 +58,108 @@ footer{padding:5vh 6vw;text-align:center;font-size:12px;letter-spacing:2px;color
     <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="4"/><circle r="48" stroke-width="2"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="7"/></g></svg>
     <span>GRANDEZZA</span>
   </a>
-  <a class="back" href="index.html">← Zur Startseite</a>
+  <div class="header-right">
+    <a class="back" href="index.html" data-de="← Zur Startseite" data-en="← Back to home">← Zur Startseite</a>
+    <button id="langToggle" aria-label="Sprache wechseln / switch language">EN</button>
+  </div>
 </header>
 
 <main>
-  <h1>Allgemeine Geschäftsbedingungen</h1>
+  <h1 data-de="Allgemeine Geschäftsbedingungen" data-en="Terms &amp; Conditions">Allgemeine Geschäftsbedingungen</h1>
 
   <div class="note">
-    <strong>Hinweis für die Bearbeitung:</strong> Dies ist ein Gerüst, kein fertiger Vertragstext.
+    <strong data-de="Hinweis für die Bearbeitung:" data-en="Note for whoever is editing this:">Hinweis für die Bearbeitung:</strong>
+    <span data-de="Dies ist ein Gerüst, kein fertiger Vertragstext. Ersetzen Sie jede [Platzhalter-Angabe] und lassen Sie diese AGB vor Veröffentlichung von einer Rechtsanwältin oder einem Rechtsanwalt prüfen — insbesondere die Abschnitte zu Haftung, Laufzeit und Widerruf hängen stark davon ab, ob Sie an Verbraucher oder ausschließlich an Unternehmen (B2B) verkaufen." data-en="This is a scaffold, not a finished contract. Replace every [bracketed placeholder] and have these terms reviewed by a lawyer before publishing — the liability, term, and cancellation sections in particular depend heavily on whether you sell to consumers or exclusively to businesses (B2B).">Dies ist ein Gerüst, kein fertiger Vertragstext.
     Ersetzen Sie jede <span class="ph">[Platzhalter-Angabe]</span> und lassen Sie diese AGB vor
     Veröffentlichung von einer Rechtsanwältin oder einem Rechtsanwalt prüfen — insbesondere die
     Abschnitte zu Haftung, Laufzeit und Widerruf hängen stark davon ab, ob Sie an Verbraucher oder
-    ausschließlich an Unternehmen (B2B) verkaufen.
+    ausschließlich an Unternehmen (B2B) verkaufen.</span>
   </div>
 
   <section>
-    <h2>1. Geltungsbereich</h2>
-    <p>Diese Bedingungen gelten für alle Verträge zwischen <span class="ph">[Vollständiger Name /
-      Firma, siehe Impressum]</span> („Grandezza") und ihren Kundinnen und Kunden über die
-      Erstellung von Websites und die Erbringung laufender Marketingleistungen.</p>
+    <h2 data-de="1. Geltungsbereich" data-en="1. Scope">1. Geltungsbereich</h2>
+    <p><span data-de="Diese Bedingungen gelten für alle Verträge zwischen" data-en="These terms apply to all contracts between">Diese Bedingungen gelten für alle Verträge zwischen</span>
+      <span class="ph" data-de="[Vollständiger Name / Firma, siehe Impressum]" data-en="[Full legal name / company name, see Legal Notice]">[Vollständiger Name /
+      Firma, siehe Impressum]</span>
+      <span data-de="(„Grandezza“) und ihren Kundinnen und Kunden über die Erstellung von Websites und die Erbringung laufender Marketingleistungen." data-en='("Grandezza") and its clients, covering the creation of websites and the provision of ongoing marketing services.'>(„Grandezza") und ihren Kundinnen und Kunden über die
+      Erstellung von Websites und die Erbringung laufender Marketingleistungen.</span></p>
   </section>
 
   <section>
-    <h2>2. Vertragsschluss</h2>
-    <p>Der Vertrag kommt zustande, sobald die Kundin bzw. der Kunde das Angebot von Grandezza
+    <h2 data-de="2. Vertragsschluss" data-en="2. Formation of contract">2. Vertragsschluss</h2>
+    <p data-de="Der Vertrag kommt zustande, sobald die Kundin bzw. der Kunde das Angebot von Grandezza annimmt — etwa durch Bestätigung eines Angebots per E-Mail oder durch Abschluss eines Abonnements über die von Grandezza bereitgestellte Zahlungsseite." data-en="The contract is formed once the client accepts Grandezza's offer — for example by confirming a quote via email, or by completing a subscription through the payment page Grandezza provides.">Der Vertrag kommt zustande, sobald die Kundin bzw. der Kunde das Angebot von Grandezza
       annimmt — etwa durch Bestätigung eines Angebots per E-Mail oder durch Abschluss eines
       Abonnements über die von Grandezza bereitgestellte Zahlungsseite.</p>
   </section>
 
   <section>
-    <h2>3. Leistungsumfang</h2>
-    <p>Grandezza erstellt auf Basis der von der Kundin bzw. dem Kunden bereitgestellten
+    <h2 data-de="3. Leistungsumfang" data-en="3. Scope of services">3. Leistungsumfang</h2>
+    <p data-de="Grandezza erstellt auf Basis der von der Kundin bzw. dem Kunden bereitgestellten Informationen eine Website und veröffentlicht diese. Je nach gebuchtem Paket erstellt Grandezza zusätzlich laufend Social-Media- und E-Mail-Inhalte. Der genaue Leistungsumfang richtet sich nach dem gebuchten Paket gemäß der Preisübersicht auf grandezza.design." data-en="Grandezza builds and publishes a website based on the information the client provides. Depending on the package booked, Grandezza also produces ongoing social media and email content. The exact scope of services follows the package booked per the pricing overview on grandezza.design.">Grandezza erstellt auf Basis der von der Kundin bzw. dem Kunden bereitgestellten
       Informationen eine Website und veröffentlicht diese. Je nach gebuchtem Paket erstellt
       Grandezza zusätzlich laufend Social-Media- und E-Mail-Inhalte. Der genaue Leistungsumfang
       richtet sich nach dem gebuchten Paket gemäß der Preisübersicht auf grandezza.design.</p>
   </section>
 
   <section>
-    <h2>4. Preise und Zahlung</h2>
-    <p><span class="ph">[Festlegen: konkrete Preise, Zahlungsintervall (z. B. monatlich), und ob
+    <h2 data-de="4. Preise und Zahlung" data-en="4. Pricing and payment">4. Preise und Zahlung</h2>
+    <p><span class="ph" data-de="[Festlegen: konkrete Preise, Zahlungsintervall (z. B. monatlich), und ob die Erstzahlung bei Vertragsschluss oder bei Livegang der Website fällig wird]" data-en="[Decide: actual prices, billing interval (e.g. monthly), and whether the first payment is due at contract signing or at site launch]">[Festlegen: konkrete Preise, Zahlungsintervall (z. B. monatlich), und ob
       die Erstzahlung bei Vertragsschluss oder bei Livegang der Website fällig wird]</span></p>
-    <p>Laufende Zahlungen werden über einen externen Zahlungsdienstleister abgewickelt.</p>
+    <p data-de="Laufende Zahlungen werden über einen externen Zahlungsdienstleister abgewickelt." data-en="Recurring payments are processed through a third-party payment provider.">Laufende Zahlungen werden über einen externen Zahlungsdienstleister abgewickelt.</p>
   </section>
 
   <section>
-    <h2>5. Laufzeit und Kündigung</h2>
-    <p><span class="ph">[Festlegen: Mindestlaufzeit, Kündigungsfrist, ob sich der Vertrag
+    <h2 data-de="5. Laufzeit und Kündigung" data-en="5. Term and cancellation">5. Laufzeit und Kündigung</h2>
+    <p><span class="ph" data-de="[Festlegen: Mindestlaufzeit, Kündigungsfrist, ob sich der Vertrag automatisch verlängert]" data-en="[Decide: minimum term, notice period, whether the contract auto-renews]">[Festlegen: Mindestlaufzeit, Kündigungsfrist, ob sich der Vertrag
       automatisch verlängert]</span></p>
   </section>
 
   <section>
-    <h2>6. Mitwirkungspflichten</h2>
-    <p>Die Kundin bzw. der Kunde stellt die für die Erstellung der Website notwendigen
+    <h2 data-de="6. Mitwirkungspflichten" data-en="6. Client's obligations">6. Mitwirkungspflichten</h2>
+    <p data-de="Die Kundin bzw. der Kunde stellt die für die Erstellung der Website notwendigen Informationen (Unternehmensbeschreibung, Leistungen, Markenfarben) zur Verfügung. Verzögert sich die Bereitstellung, verzögert sich entsprechend auch die Fertigstellung." data-en="The client provides the information needed to build the website (business description, services, brand colors). Delays in providing this information delay completion accordingly.">Die Kundin bzw. der Kunde stellt die für die Erstellung der Website notwendigen
       Informationen (Unternehmensbeschreibung, Leistungen, Markenfarben) zur Verfügung. Verzögert
       sich die Bereitstellung, verzögert sich entsprechend auch die Fertigstellung.</p>
   </section>
 
   <section>
-    <h2>7. Haftung</h2>
-    <p><span class="ph">[Festlegen: Haftungsbeschränkung, z. B. auf Vorsatz und grobe
+    <h2 data-de="7. Haftung" data-en="7. Liability">7. Haftung</h2>
+    <p><span class="ph" data-de="[Festlegen: Haftungsbeschränkung, z. B. auf Vorsatz und grobe Fahrlässigkeit sowie auf vertragstypische, vorhersehbare Schäden — eine pauschale Haftungsbeschränkung ist nur in engen Grenzen wirksam und sollte anwaltlich geprüft werden]" data-en="[Decide: liability limitation, e.g. to intent and gross negligence, and to foreseeable damages typical for this kind of contract — a blanket liability cap is only valid within narrow limits and should be reviewed by a lawyer]">[Festlegen: Haftungsbeschränkung, z. B. auf Vorsatz und grobe
       Fahrlässigkeit sowie auf vertragstypische, vorhersehbare Schäden — eine pauschale
       Haftungsbeschränkung ist nur in engen Grenzen wirksam und sollte anwaltlich geprüft werden]</span></p>
   </section>
 
   <section>
-    <h2>8. Datenschutz</h2>
-    <p>Informationen zur Verarbeitung personenbezogener Daten finden Sie in unserer
-      <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+    <h2 data-de="8. Datenschutz" data-en="8. Data protection">8. Datenschutz</h2>
+    <p><span data-de="Informationen zur Verarbeitung personenbezogener Daten finden Sie in unserer" data-en="Information on how we process personal data can be found in our">Informationen zur Verarbeitung personenbezogener Daten finden Sie in unserer</span>
+      <a href="datenschutz.html" data-de="Datenschutzerklärung" data-en="Privacy Policy">Datenschutzerklärung</a>.</p>
   </section>
 
   <section>
-    <h2>9. Schlussbestimmungen</h2>
-    <p>Es gilt das Recht der Bundesrepublik Deutschland. <span class="ph">[Bei Verträgen mit
+    <h2 data-de="9. Schlussbestimmungen" data-en="9. Final provisions">9. Schlussbestimmungen</h2>
+    <p><span data-de="Es gilt das Recht der Bundesrepublik Deutschland." data-en="The law of the Federal Republic of Germany applies.">Es gilt das Recht der Bundesrepublik Deutschland.</span>
+      <span class="ph" data-de="[Bei Verträgen mit Verbrauchern: Hinweis auf zwingende verbraucherschützende Vorschriften des Wohnsitzstaates ergänzen. Gerichtsstand nur bei B2B-Verträgen mit Kaufleuten frei vereinbar.]" data-en="[For contracts with consumers: add a note on mandatory consumer-protection provisions of their home state. A freely agreed jurisdiction clause is only valid for B2B contracts with merchants.]">[Bei Verträgen mit
       Verbrauchern: Hinweis auf zwingende verbraucherschützende Vorschriften des Wohnsitzstaates
       ergänzen. Gerichtsstand nur bei B2B-Verträgen mit Kaufleuten frei vereinbar.]</span></p>
   </section>
 </main>
 
-<footer>GRANDEZZA DESIGN · BREMEN</footer>
+<footer data-de="GRANDEZZA DESIGN · BREMEN · © 2026" data-en="GRANDEZZA DESIGN · BREMEN · © 2026">GRANDEZZA DESIGN · BREMEN · © 2026</footer>
+
+<script>
+var toggle=document.getElementById('langToggle');
+var titles={de:'AGB — Grandezza Design',en:'Terms & Conditions — Grandezza Design'};
+function setLang(l){
+  document.documentElement.lang=l;
+  document.title=titles[l];
+  document.querySelectorAll('[data-de]').forEach(function(el){el.innerHTML=el.getAttribute('data-'+l)});
+  toggle.textContent=(l==='de')?'EN':'DE';
+  toggle.dataset.current=l;
+  try{sessionStorage.setItem('gdz-lang',l)}catch(e){}
+}
+toggle.addEventListener('click',function(){setLang(toggle.dataset.current==='de'?'en':'de')});
+var saved=null;
+try{saved=sessionStorage.getItem('gdz-lang')}catch(e){}
+setLang(saved==='en'?'en':'de');
+</script>
 
 </body>
 </html>

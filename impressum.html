@@ -20,13 +20,19 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--ivory);color:var(--charcoal);font-family:var(--sans);font-weight:300;line-height:1.75}
-header{padding:5vh 6vw 3vh;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(28,25,23,.12)}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--charcoal)}
+
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--charcoal);padding:18px 5vw;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ivory)}
 .brand svg{width:30px;height:30px}
 .brand span{font-family:var(--serif);font-size:15px;letter-spacing:4px}
-header a.back{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:2px}
-main{max-width:700px;margin:0 auto;padding:8vh 6vw 14vh}
-h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,5vw,46px);margin-bottom:8vh;letter-spacing:.02em}
+.header-right{display:flex;align-items:center;gap:22px}
+header a.back{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ivory);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:2px;opacity:.85;transition:opacity .3s}
+header a.back:hover{opacity:1}
+#langToggle{background:none;border:1px solid rgba(176,141,87,.5);color:var(--gold-light);font-family:var(--sans);font-size:12px;letter-spacing:3px;padding:6px 14px;cursor:pointer;transition:background .3s,color .3s}
+#langToggle:hover{background:var(--gold);color:var(--charcoal)}
+
+main{max-width:700px;margin:0 auto;padding:16vh 6vw 12vh}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,5vw,46px);margin-bottom:8vh;letter-spacing:.02em;text-wrap:balance}
 .note{border:1px dashed rgba(176,141,87,.6);background:rgba(176,141,87,.06);padding:20px 22px;font-size:13.5px;color:#5c554b;margin-bottom:8vh}
 .note strong{color:var(--charcoal)}
 section{margin-bottom:6vh}
@@ -34,7 +40,15 @@ h2{font-family:var(--serif);font-weight:400;font-size:20px;margin-bottom:16px;le
 p{font-size:15px;color:#3d3830;margin-bottom:10px}
 .ph{color:#a3483a;font-style:italic}
 a{color:var(--charcoal)}
-footer{padding:5vh 6vw;text-align:center;font-size:12px;letter-spacing:2px;color:#8a8377}
+
+footer{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--charcoal);border-top:1px solid rgba(176,141,87,.3);padding:10px 5vw;text-align:center;font-size:11px;letter-spacing:2px;color:rgba(246,241,232,.55)}
+
+@media (max-width:640px){
+  header{padding:14px 5vw}
+  .brand span{display:none}
+  .header-right{gap:14px}
+  main{padding-top:14vh}
+}
 </style>
 </head>
 <body>
@@ -44,69 +58,90 @@ footer{padding:5vh 6vw;text-align:center;font-size:12px;letter-spacing:2px;color
     <svg viewBox="0 0 140 140" aria-hidden="true"><g transform="translate(70,70)" fill="none" stroke="#B08D57"><circle r="58" stroke-width="4"/><circle r="48" stroke-width="2"/><path d="M 21.2,-21.2 A 30,30 0 1 0 30,0 L 10,0" stroke-width="7"/></g></svg>
     <span>GRANDEZZA</span>
   </a>
-  <a class="back" href="index.html">← Zur Startseite</a>
+  <div class="header-right">
+    <a class="back" href="index.html" data-de="← Zur Startseite" data-en="← Back to home">← Zur Startseite</a>
+    <button id="langToggle" aria-label="Sprache wechseln / switch language">EN</button>
+  </div>
 </header>
 
 <main>
-  <h1>Impressum</h1>
+  <h1 data-de="Impressum" data-en="Legal Notice">Impressum</h1>
 
   <div class="note">
-    <strong>Hinweis für die Bearbeitung:</strong> Diese Seite ist eine Vorlage nach § 5 DDG.
+    <strong data-de="Hinweis für die Bearbeitung:" data-en="Note for whoever is editing this:">Hinweis für die Bearbeitung:</strong>
+    <span data-de="Diese Seite ist eine Vorlage nach § 5 DDG. Ersetzen Sie jede [Platzhalter-Angabe] durch Ihre echten Geschäftsdaten, bevor die Seite veröffentlicht wird. Bei einer GmbH oder anderen Kapitalgesellschaft empfiehlt sich zusätzlich eine kurze juristische Prüfung." data-en="This page is a template under § 5 DDG (the German law governing legal notices). Replace every [bracketed placeholder] with your real business details before publishing, and if you're a GmbH or other incorporated company, have it briefly reviewed by a lawyer.">Diese Seite ist eine Vorlage nach § 5 DDG.
     Ersetzen Sie jede <span class="ph">[Platzhalter-Angabe]</span> durch Ihre echten Geschäftsdaten,
     bevor die Seite veröffentlicht wird. Bei einer GmbH oder anderen Kapitalgesellschaft empfiehlt
-    sich zusätzlich eine kurze juristische Prüfung.
+    sich zusätzlich eine kurze juristische Prüfung.</span>
   </div>
 
   <section>
-    <h2>Diensteanbieter</h2>
-    <p><span class="ph">[Vollständiger Name / Firma, z. B. „Grandezza Design GmbH" oder Vor- und Nachname bei Einzelunternehmen]</span></p>
-    <p>Rechtsform: <span class="ph">[z. B. Einzelunternehmen / GmbH]</span></p>
-    <p>Vertreten durch: <span class="ph">[Name der Geschäftsführung / Inhaberin bzw. Inhabers]</span></p>
+    <h2 data-de="Diensteanbieter" data-en="Service provider">Diensteanbieter</h2>
+    <p><span class="ph" data-de="[Vollständiger Name / Firma, z. B. „Grandezza Design GmbH“ oder Vor- und Nachname bei Einzelunternehmen]" data-en="[Full legal name / company name, e.g. “Grandezza Design GmbH”, or your full name if a sole proprietorship]">[Vollständiger Name / Firma, z. B. „Grandezza Design GmbH" oder Vor- und Nachname bei Einzelunternehmen]</span></p>
+    <p><span data-de="Rechtsform:" data-en="Legal form:">Rechtsform:</span> <span class="ph" data-de="[z. B. Einzelunternehmen / GmbH]" data-en="[e.g. sole proprietorship / GmbH]">[z. B. Einzelunternehmen / GmbH]</span></p>
+    <p><span data-de="Vertreten durch:" data-en="Represented by:">Vertreten durch:</span> <span class="ph" data-de="[Name der Geschäftsführung / Inhaberin bzw. Inhabers]" data-en="[Name of managing director / owner]">[Name der Geschäftsführung / Inhaberin bzw. Inhabers]</span></p>
   </section>
 
   <section>
-    <h2>Anschrift</h2>
-    <p><span class="ph">[Straße und Hausnummer]</span></p>
-    <p><span class="ph">[Postleitzahl und Ort]</span>, Deutschland</p>
+    <h2 data-de="Anschrift" data-en="Address">Anschrift</h2>
+    <p><span class="ph" data-de="[Straße und Hausnummer]" data-en="[Street and house number]">[Straße und Hausnummer]</span></p>
+    <p><span class="ph" data-de="[Postleitzahl und Ort]" data-en="[Postal code and city]">[Postleitzahl und Ort]</span>, <span data-de="Deutschland" data-en="Germany">Deutschland</span></p>
   </section>
 
   <section>
-    <h2>Kontakt</h2>
+    <h2 data-de="Kontakt" data-en="Contact">Kontakt</h2>
     <p>E-Mail: <a href="mailto:hallo@grandezza.design">hallo@grandezza.design</a></p>
-    <p>Telefon: <span class="ph">[Telefonnummer]</span></p>
+    <p><span data-de="Telefon:" data-en="Phone:">Telefon:</span> <span class="ph" data-de="[Telefonnummer]" data-en="[Phone number]">[Telefonnummer]</span></p>
   </section>
 
   <section>
-    <h2>Registereintrag <span style="font-size:13px;color:#8a8377">(falls zutreffend)</span></h2>
-    <p>Registergericht: <span class="ph">[z. B. Amtsgericht Bremen]</span></p>
-    <p>Registernummer: <span class="ph">[z. B. HRB 12345]</span></p>
+    <h2><span data-de="Registereintrag" data-en="Commercial register entry">Registereintrag</span> <span style="font-size:13px;color:#8a8377" data-de="(falls zutreffend)" data-en="(if applicable)">(falls zutreffend)</span></h2>
+    <p><span data-de="Registergericht:" data-en="Register court:">Registergericht:</span> <span class="ph" data-de="[z. B. Amtsgericht Bremen]" data-en="[e.g. Amtsgericht Bremen]">[z. B. Amtsgericht Bremen]</span></p>
+    <p><span data-de="Registernummer:" data-en="Register number:">Registernummer:</span> <span class="ph" data-de="[z. B. HRB 12345]" data-en="[e.g. HRB 12345]">[z. B. HRB 12345]</span></p>
   </section>
 
   <section>
-    <h2>Umsatzsteuer-ID <span style="font-size:13px;color:#8a8377">(falls zutreffend)</span></h2>
-    <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: <span class="ph">[USt-IdNr.]</span></p>
+    <h2><span data-de="Umsatzsteuer-ID" data-en="VAT ID">Umsatzsteuer-ID</span> <span style="font-size:13px;color:#8a8377" data-de="(falls zutreffend)" data-en="(if applicable)">(falls zutreffend)</span></h2>
+    <p><span data-de="Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:" data-en="VAT identification number per § 27a of the German VAT Act:">Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:</span> <span class="ph" data-de="[USt-IdNr.]" data-en="[VAT ID]">[USt-IdNr.]</span></p>
   </section>
 
   <section>
-    <h2>Inhaltlich verantwortlich gemäß § 18 Abs. 2 MStV</h2>
-    <p><span class="ph">[Name und Anschrift wie oben]</span></p>
+    <h2 data-de="Inhaltlich verantwortlich gemäß § 18 Abs. 2 MStV" data-en="Responsible for content per § 18(2) of the German Interstate Media Treaty (MStV)">Inhaltlich verantwortlich gemäß § 18 Abs. 2 MStV</h2>
+    <p><span class="ph" data-de="[Name und Anschrift wie oben]" data-en="[Name and address as above]">[Name und Anschrift wie oben]</span></p>
   </section>
 
   <section>
-    <h2>EU-Streitschlichtung</h2>
-    <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+    <h2 data-de="EU-Streitschlichtung" data-en="EU dispute resolution">EU-Streitschlichtung</h2>
+    <p data-de="Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr/. Unsere E-Mail-Adresse finden Sie oben unter „Kontakt“." data-en="The European Commission provides a platform for online dispute resolution (ODR): https://ec.europa.eu/consumers/odr/. Our email address is listed above under “Contact.”">Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
       <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>.
       Unsere E-Mail-Adresse finden Sie oben unter „Kontakt".</p>
   </section>
 
   <section>
-    <h2>Verbraucherstreitbeilegung</h2>
-    <p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
+    <h2 data-de="Verbraucherstreitbeilegung" data-en="Consumer dispute resolution">Verbraucherstreitbeilegung</h2>
+    <p data-de="Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen." data-en="We are not willing and not obligated to participate in dispute resolution proceedings before a consumer arbitration board.">Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
       Verbraucherschlichtungsstelle teilzunehmen.</p>
   </section>
 </main>
 
-<footer>GRANDEZZA DESIGN · BREMEN</footer>
+<footer data-de="GRANDEZZA DESIGN · BREMEN · © 2026" data-en="GRANDEZZA DESIGN · BREMEN · © 2026">GRANDEZZA DESIGN · BREMEN · © 2026</footer>
+
+<script>
+var toggle=document.getElementById('langToggle');
+var titles={de:'Impressum — Grandezza Design',en:'Legal Notice — Grandezza Design'};
+function setLang(l){
+  document.documentElement.lang=l;
+  document.title=titles[l];
+  document.querySelectorAll('[data-de]').forEach(function(el){el.innerHTML=el.getAttribute('data-'+l)});
+  toggle.textContent=(l==='de')?'EN':'DE';
+  toggle.dataset.current=l;
+  try{sessionStorage.setItem('gdz-lang',l)}catch(e){}
+}
+toggle.addEventListener('click',function(){setLang(toggle.dataset.current==='de'?'en':'de')});
+var saved=null;
+try{saved=sessionStorage.getItem('gdz-lang')}catch(e){}
+setLang(saved==='en'?'en':'de');
+</script>
 
 </body>
 </html>
